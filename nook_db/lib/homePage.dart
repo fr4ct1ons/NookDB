@@ -23,17 +23,20 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            /*const SizedBox(
-              height: 15,
-            ),
-            Text(
-              'Welcome back, $userName!',
-              style: TextStyle(fontSize: 30),
-            ),*/
-            const SizedBox(height: 15),
+          children: const <Widget>[
+            SizedBox(height: 15),
             TodoList(),
             ButtonGrid(),
+            SizedBox(
+              height: 7,
+            ),
+            Text(
+              "Available critters",
+              style: TextStyle(fontSize: 24),
+            ),
+            SizedBox(
+              height: 7,
+            ),
             AvailableCritters()
           ],
         ),

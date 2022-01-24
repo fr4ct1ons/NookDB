@@ -10,23 +10,27 @@ class ButtonGrid extends StatefulWidget {
 class _ButtonGridState extends State<ButtonGrid> {
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Container(
         //constraints: BoxConstraints(maxHeight: double.infinity),
         //padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
         //height: 250,
         child: Padding(
       padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
-      child: GridView(
-        gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-        children: [
-          OutlinedButton(onPressed: () {}, child: Text('Critters')),
-          OutlinedButton(onPressed: () {}, child: Text('Art')),
-          OutlinedButton(onPressed: () {}, child: Text('Items')),
-          OutlinedButton(onPressed: () {}, child: Text('Villagers')),
-          OutlinedButton(onPressed: () {}, child: Text('Fossils')),
-          OutlinedButton(onPressed: () {}, child: Text('Clothing')),
-        ],
+      child: Container(
+        child: GridView(
+          gridDelegate:
+              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          children: [
+            OutlinedButton(onPressed: () {}, child: Text('Critters')),
+            OutlinedButton(onPressed: () {}, child: Text('Art')),
+            OutlinedButton(onPressed: () {}, child: Text('Items')),
+            OutlinedButton(onPressed: () {}, child: Text('Villagers')),
+            OutlinedButton(onPressed: () {}, child: Text('Fossils')),
+            OutlinedButton(onPressed: () {}, child: Text('Clothing')),
+          ],
+        ),
       ),
     ));
   }
