@@ -23,12 +23,74 @@ class _ButtonGridState extends State<ButtonGrid> {
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           children: [
-            OutlinedButton(onPressed: () {}, child: Text('Critters')),
-            OutlinedButton(onPressed: () {}, child: Text('Art')),
-            OutlinedButton(onPressed: () {}, child: Text('Items')),
-            OutlinedButton(onPressed: () {}, child: Text('Villagers')),
-            OutlinedButton(onPressed: () {}, child: Text('Fossils')),
-            OutlinedButton(onPressed: () {}, child: Text('Clothing')),
+            OutlinedButton(
+                onPressed: () {},
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: Column(
+                    children: const [
+                      Image(
+                          height: 64, image: AssetImage("assets/critters.png")),
+                      Text('Critters'),
+                    ],
+                  ),
+                )),
+            OutlinedButton(
+                onPressed: () {},
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: Column(
+                    children: const [
+                      Image(height: 64, image: AssetImage("assets/items.png")),
+                      Text('Art'),
+                    ],
+                  ),
+                )),
+            OutlinedButton(
+                onPressed: () {},
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: Column(
+                    children: const [
+                      Image(height: 64, image: AssetImage("assets/items.png")),
+                      Text('Items'),
+                    ],
+                  ),
+                )),
+            OutlinedButton(
+                onPressed: () {},
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: Column(
+                    children: const [
+                      Image(height: 64, image: AssetImage("assets/items.png")),
+                      Text('Villagers'),
+                    ],
+                  ),
+                )),
+            OutlinedButton(
+                onPressed: () {},
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: Column(
+                    children: const [
+                      Image(height: 64, image: AssetImage("assets/fossil.png")),
+                      Text('Fossils'),
+                    ],
+                  ),
+                )),
+            OutlinedButton(
+                onPressed: () {},
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: Column(
+                    children: const [
+                      Image(
+                          height: 64, image: AssetImage("assets/clothing.png")),
+                      Text('Clothing'),
+                    ],
+                  ),
+                )),
           ],
         ),
       ),

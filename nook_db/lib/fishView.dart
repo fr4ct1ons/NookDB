@@ -72,6 +72,7 @@ class _FishViewState extends State<FishView> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Fish"),
+        backgroundColor: Colors.blue,
       ),
       backgroundColor: Colors.blue.shade50,
       body: Padding(

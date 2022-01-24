@@ -20,10 +20,7 @@ class _TodoListState extends State<TodoList> {
     items = [
       'Check turnip prices',
       'Water crops',
-      'Mine money rock',
-      'Mine money rock',
-      'Mine money rock',
-      'Mine money rock'
+      'Dig money rock',
     ];
 
     itemStatus = List<bool>.filled(items.length, false);
