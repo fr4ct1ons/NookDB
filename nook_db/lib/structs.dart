@@ -1,50 +1,46 @@
-class Fish {
+List<Critter> critters = [];
+
+class Critter {
   String usName = '';
   String time = '';
   List<int> timeArray = [];
-  List<int> monthArray = [];
+  List<int> monthArrayNorth = [];
+  List<int> monthArraySouth = [];
   bool isAllDay = false, isAllYear = false;
   int price = 0;
   String catchPhrase = '';
   String museumPhrase = '';
   String iconUrl = '';
   String imageUrl = '';
+  String location = '';
 
+  bool isActive() {
+    if (monthArrayNorth.contains(DateTime.now().month)) {
+      if (timeArray.contains(DateTime.now().hour)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  String uppercaseName() {
+    return usName[0].toUpperCase() + usName.substring(1);
+  }
+}
+
+class Fish extends Critter {
   int priceCj = 0;
   String shadow = '';
-  String location = '';
   String rarity = '';
 }
 
-class Bug {
-  String usName = '';
-  String time = '';
-  List<int> timeArray = [];
-  List<int> monthArray = [];
-  bool isAllDay = false, isAllYear = false;
-  int price = 0;
-  String iconUrl = '';
-  String imageUrl = '';
-  String catchPhrase = '';
-  String museumPhrase = '';
-
+class Bug extends Critter {
   int priceFlick = 0;
-  String location = '';
   String rarity = '';
 }
 
-class Creature {
-  String usName = '';
-  String time = '';
-  List<int> timeArray = [];
-  List<int> monthArray = [];
-  bool isAllDay = false, isAllYear = false;
-  int price = 0;
-  String iconUrl = '';
-  String imageUrl = '';
-  String catchPhrase = '';
-  String museumPhrase = '';
-
-  String location = '';
+class Creature extends Critter {
   String speed = '';
+  String shadow = '';
 }

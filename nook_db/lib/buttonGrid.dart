@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nook_db/critterSearch.dart';
 
 class ButtonGrid extends StatefulWidget {
   const ButtonGrid({Key? key}) : super(key: key);
@@ -98,7 +99,13 @@ class _ButtonGridState extends State<ButtonGrid> {
     ));
   }
 
-  void _showCritterSearch() {}
+  void _showCritterSearch() async {
+    await Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return CritterSearch();
+      },
+    ));
+  }
 }
 
 /*

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:nook_db/structs.dart';
 
 class SeaCreatureView extends StatefulWidget {
-  SeaCreatureView({Key? key, required this.crts, required this.index})
-      : super(key: key);
-  var crts;
-  int index;
+  SeaCreatureView({Key? key, required this.creature}) : super(key: key);
+  Creature creature;
 
   @override
   _SeaCreatureViewState createState() => _SeaCreatureViewState();
@@ -29,16 +28,14 @@ class _SeaCreatureViewState extends State<SeaCreatureView> {
     "Dec",
   ];
 
-  int index = 0;
-  var crts = <dynamic>[];
+  Creature creature = Creature();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    index = widget.index;
-    crts = widget.crts;
+    creature = widget.creature;
 
     textGrid = [];
     _generateTextGrid();
@@ -46,8 +43,7 @@ class _SeaCreatureViewState extends State<SeaCreatureView> {
 
     for (var i = 0; i < months.length; i++) {
       Color highlight = Colors.deepPurple.shade100;
-      if ((crts[index]["availability"]["month-array-northern"] as List)
-          .contains(i + 1)) {
+      if (creature.monthArrayNorth.contains(i + 1)) {
         highlight = Colors.deepPurpleAccent.shade100;
       }
 
@@ -66,8 +62,8 @@ class _SeaCreatureViewState extends State<SeaCreatureView> {
 
   @override
   Widget build(BuildContext context) {
-    String creatureName = crts[index]['name']['name-USen'];
-    creatureName = creatureName[0].toUpperCase() + creatureName.substring(1);
+    String creatureName = creature.usName;
+    creatureName = creature.uppercaseName();
 
     return Scaffold(
       appBar: AppBar(
@@ -84,9 +80,9 @@ class _SeaCreatureViewState extends State<SeaCreatureView> {
                 creatureName,
                 style: TextStyle(fontSize: 24),
               ),
-              Image(image: NetworkImage(crts[index]['image_uri'])),
+              Image(image: NetworkImage(creature.imageUrl)),
               Text(
-                crts[index]['catch-phrase'],
+                creature.catchPhrase,
                 style: TextStyle(color: Colors.grey.shade600),
               ),
               const SizedBox(
@@ -157,14 +153,11 @@ class _SeaCreatureViewState extends State<SeaCreatureView> {
     setState(() {
       //textGrid.addAll(_drawTextPair("Location", crts[index]['availability']['location']));
       textGrid.addAll(_drawTextPair(
-          "Availability",
-          crts[index]['availability']['isAllDay']
-              ? 'All day'
-              : crts[index]['availability']['time']));
-      textGrid.addAll(_drawTextPair("Speed", crts[index]['speed']));
+          "Availability", creature.isAllDay ? 'All day' : creature.time));
+      textGrid.addAll(_drawTextPair("Speed", creature.speed));
       //textGrid.addAll(_drawTextPair("Availability", "All day"));
-      textGrid.addAll(_drawTextPair("Shadow size", crts[index]['shadow']));
-      textGrid.addAll(_drawTextPair("Price", crts[index]['price'].toString()));
+      textGrid.addAll(_drawTextPair("Shadow size", creature.shadow));
+      textGrid.addAll(_drawTextPair("Price", creature.price.toString()));
       //textGrid.addAll(_drawTextPair("Flick's price", crts[index]['price-flick'].toString()));
     });
   }

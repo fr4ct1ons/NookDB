@@ -4,6 +4,7 @@ import 'package:nook_db/fishView.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:nook_db/seaCreatureView.dart';
+import 'structs.dart';
 
 class AvailableCritters extends StatefulWidget {
   const AvailableCritters({Key? key}) : super(key: key);
@@ -41,34 +42,31 @@ class _AvailableCrittersState extends State<AvailableCritters> {
     );
   }
 
-  void _showFish(int index) async {
+  void _showFish(Fish fish) async {
     await Navigator.push(context, MaterialPageRoute(
       builder: (context) {
         return FishView(
-          fish: fish, //TODO: Create a critter/fish class
-          index: index,
+          fish: fish,
         );
       },
     ));
   }
 
-  void _showCreature(int index) async {
+  void _showCreature(Creature creature) async {
     await Navigator.push(context, MaterialPageRoute(
       builder: (context) {
         return SeaCreatureView(
-          crts: crts, //TODO: Create a critter/fish class
-          index: index,
+          creature: creature,
         );
       },
     ));
   }
 
-  void _showBug(int index) async {
+  void _showBug(Bug bug) async {
     await Navigator.push(context, MaterialPageRoute(
       builder: (context) {
         return BugView(
-          bugs: bugs, //TODO: Create a critter/fish class
-          index: index,
+          bug: bug,
         );
       },
     ));
@@ -97,13 +95,38 @@ class _AvailableCrittersState extends State<AvailableCritters> {
 
     setState(() {
       for (var i = 0; i < crts.length; i++) {
+        Creature newCritter = Creature();
+        newCritter.usName = crts[i]['name']['name-USen'];
+        newCritter.monthArrayNorth =
+            crts[i]["availability"]["month-array-northern"].cast<int>();
+        ;
+        newCritter.monthArraySouth =
+            crts[i]["availability"]["month-array-southern"].cast<int>();
+        ;
+        newCritter.timeArray =
+            crts[i]['availability']['time-array'].cast<int>();
+        ;
+        newCritter.time = crts[i]['availability']['time'];
+        newCritter.isAllDay = crts[i]['availability']['isAllDay'];
+        newCritter.isAllYear = crts[i]['availability']['isAllYear'];
+        newCritter.iconUrl = crts[i]['icon_uri'];
+        newCritter.imageUrl = crts[i]['image_uri'];
+        newCritter.price = crts[i]['price'];
+        newCritter.catchPhrase = crts[i]['catch-phrase'];
+        newCritter.museumPhrase = crts[i]['museum-phrase'];
+
+        //newCritter.location = fish[i]['availability']["location"]; //Sea Creatures don't use location
+        newCritter.speed = crts[i]['speed'];
+        newCritter.shadow = crts[i]['shadow'];
+        critters.add(newCritter);
+
         if ((crts[i]["availability"]["month-array-northern"] as List)
             .contains(DateTime.now().month)) {
           if ((crts[i]["availability"]["time-array"] as List)
               .contains(DateTime.now().hour)) {
             _buttons.add(RawMaterialButton(
               onPressed: () {
-                _showCreature(i);
+                _showCreature(newCritter);
               },
               elevation: 2.0,
               fillColor: Colors.deepPurple.shade50,
@@ -135,13 +158,39 @@ class _AvailableCrittersState extends State<AvailableCritters> {
 
     setState(() {
       for (var i = 0; i < fish.length; i++) {
+        Fish newFish = Fish();
+        newFish.usName = fish[i]['name']['name-USen'];
+        newFish.monthArrayNorth =
+            fish[i]["availability"]["month-array-northern"].cast<int>();
+        ;
+        newFish.monthArraySouth =
+            fish[i]["availability"]["month-array-southern"].cast<int>();
+        ;
+        newFish.timeArray = fish[i]['availability']['time-array'].cast<int>();
+        ;
+        newFish.time = fish[i]['availability']['time'];
+        newFish.isAllDay = fish[i]['availability']['isAllDay'];
+        newFish.isAllYear = fish[i]['availability']['isAllYear'];
+        newFish.iconUrl = fish[i]['icon_uri'];
+        newFish.imageUrl = fish[i]['image_uri'];
+        newFish.price = fish[i]['price'];
+        newFish.catchPhrase = fish[i]['catch-phrase'];
+        newFish.museumPhrase = fish[i]['museum-phrase'];
+
+        newFish.priceCj = fish[i]['price-cj'];
+        newFish.shadow = fish[i]['shadow'];
+        newFish.location = fish[i]['availability']["location"];
+        newFish.rarity = fish[i]['availability']["rarity"];
+
+        critters.add(newFish);
+
         if ((fish[i]["availability"]["month-array-northern"] as List)
             .contains(DateTime.now().month)) {
           if ((fish[i]["availability"]["time-array"] as List)
               .contains(DateTime.now().hour)) {
             _buttons.add(RawMaterialButton(
               onPressed: () {
-                _showFish(i);
+                _showFish(newFish);
               },
               elevation: 2.0,
               fillColor: Colors.blue.shade50,
@@ -172,13 +221,37 @@ class _AvailableCrittersState extends State<AvailableCritters> {
 
     setState(() {
       for (var i = 0; i < bugs.length; i++) {
+        Bug newCritter = Bug();
+        newCritter.usName = bugs[i]['name']['name-USen'];
+        newCritter.monthArrayNorth =
+            bugs[i]["availability"]["month-array-northern"].cast<int>();
+        newCritter.monthArraySouth =
+            bugs[i]["availability"]["month-array-southern"].cast<int>();
+        ;
+        newCritter.timeArray =
+            bugs[i]['availability']['time-array'].cast<int>();
+        newCritter.time = bugs[i]['availability']['time'];
+        newCritter.isAllDay = bugs[i]['availability']['isAllDay'];
+        newCritter.isAllYear = bugs[i]['availability']['isAllYear'];
+        newCritter.iconUrl = bugs[i]['icon_uri'];
+        newCritter.imageUrl = bugs[i]['image_uri'];
+        newCritter.price = bugs[i]['price'];
+        newCritter.catchPhrase = bugs[i]['catch-phrase'];
+        newCritter.museumPhrase = bugs[i]['museum-phrase'];
+
+        newCritter.priceFlick = bugs[i]['price-flick'];
+        newCritter.location = bugs[i]['availability']["location"];
+        newCritter.rarity = bugs[i]['availability']["rarity"];
+
+        critters.add(newCritter);
+
         if ((bugs[i]["availability"]["month-array-northern"] as List)
             .contains(DateTime.now().month)) {
           if ((bugs[i]["availability"]["time-array"] as List)
               .contains(DateTime.now().hour)) {
             _buttons.add(RawMaterialButton(
               onPressed: () {
-                _showBug(i);
+                _showBug(newCritter);
               },
               elevation: 2.0,
               fillColor: Colors.amber.shade100,

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:nook_db/structs.dart';
 
 class BugView extends StatefulWidget {
-  BugView({Key? key, required this.bugs, required this.index})
-      : super(key: key);
-  var bugs;
-  int index;
+  BugView({Key? key, required this.bug}) : super(key: key);
+  Bug bug;
 
   @override
   _BugViewState createState() => _BugViewState();
@@ -29,16 +28,14 @@ class _BugViewState extends State<BugView> {
     "Dec",
   ];
 
-  int index = 0;
-  var bugs = <dynamic>[];
+  Bug bug = Bug();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
 
-    index = widget.index;
-    bugs = widget.bugs;
+    bug = widget.bug;
 
     textGrid = [];
     _generateTextGrid();
@@ -46,8 +43,7 @@ class _BugViewState extends State<BugView> {
 
     for (var i = 0; i < months.length; i++) {
       Color highlight = Colors.orange.shade100;
-      if ((bugs[index]["availability"]["month-array-northern"] as List)
-          .contains(i + 1)) {
+      if (bug.monthArrayNorth.contains(i + 1)) {
         highlight = Colors.orangeAccent.shade100;
       }
 
@@ -66,7 +62,7 @@ class _BugViewState extends State<BugView> {
 
   @override
   Widget build(BuildContext context) {
-    String bugName = bugs[index]['name']['name-USen'];
+    String bugName = bug.usName;
     bugName = bugName[0].toUpperCase() + bugName.substring(1);
 
     return Scaffold(
@@ -84,9 +80,9 @@ class _BugViewState extends State<BugView> {
                 bugName,
                 style: TextStyle(fontSize: 24),
               ),
-              Image(image: NetworkImage(bugs[index]['image_uri'])),
+              Image(image: NetworkImage(bug.imageUrl)),
               Text(
-                bugs[index]['catch-phrase'],
+                bug.catchPhrase,
                 style: TextStyle(color: Colors.grey.shade600),
               ),
               const SizedBox(
@@ -155,20 +151,15 @@ class _BugViewState extends State<BugView> {
 
   void _generateTextGrid() {
     setState(() {
+      textGrid.addAll(_drawTextPair("Location", bug.location));
       textGrid.addAll(
-          _drawTextPair("Location", bugs[index]['availability']['location']));
-      textGrid.addAll(_drawTextPair(
-          "Availability",
-          bugs[index]['availability']['isAllDay']
-              ? 'All day'
-              : bugs[index]['availability']['time']));
-      textGrid.addAll(
-          _drawTextPair("Rarity", bugs[index]['availability']['rarity']));
+          _drawTextPair("Availability", bug.isAllDay ? 'All day' : bug.time));
+      textGrid.addAll(_drawTextPair("Rarity", bug.rarity));
       //textGrid.addAll(_drawTextPair("Availability", "All day"));
       //textGrid.addAll(_drawTextPair("Shadow size", bugs[index]['shadow']));
-      textGrid.addAll(_drawTextPair("Price", bugs[index]['price'].toString()));
-      textGrid.addAll(_drawTextPair(
-          "Flick's price", bugs[index]['price-flick'].toString()));
+      textGrid.addAll(_drawTextPair("Price", bug.price.toString()));
+      textGrid
+          .addAll(_drawTextPair("Flick's price", bug.priceFlick.toString()));
     });
   }
 }
