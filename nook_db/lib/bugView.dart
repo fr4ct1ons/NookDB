@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class FishView extends StatefulWidget {
-  FishView({Key? key, required this.fish, required this.index})
+class BugView extends StatefulWidget {
+  BugView({Key? key, required this.bugs, required this.index})
       : super(key: key);
-  var fish;
+  var bugs;
   int index;
 
   @override
-  _FishViewState createState() => _FishViewState();
+  _BugViewState createState() => _BugViewState();
 }
 
-class _FishViewState extends State<FishView> {
+class _BugViewState extends State<BugView> {
   List<Widget> textGrid = [];
   List<Widget> monthsGrid = [];
 
@@ -30,7 +30,7 @@ class _FishViewState extends State<FishView> {
   ];
 
   int index = 0;
-  var fish = <dynamic>[];
+  var bugs = <dynamic>[];
 
   @override
   void initState() {
@@ -38,17 +38,17 @@ class _FishViewState extends State<FishView> {
     super.initState();
 
     index = widget.index;
-    fish = widget.fish;
+    bugs = widget.bugs;
 
     textGrid = [];
     _generateTextGrid();
     monthsGrid = [];
 
     for (var i = 0; i < months.length; i++) {
-      Color highlight = Colors.blue.shade100;
-      if ((fish[index]["availability"]["month-array-northern"] as List)
+      Color highlight = Colors.orange.shade100;
+      if ((bugs[index]["availability"]["month-array-northern"] as List)
           .contains(i + 1)) {
-        highlight = Colors.blueAccent.shade100;
+        highlight = Colors.orangeAccent.shade100;
       }
 
       monthsGrid.add(Card(
@@ -66,27 +66,27 @@ class _FishViewState extends State<FishView> {
 
   @override
   Widget build(BuildContext context) {
-    String fishName = fish[index]['name']['name-USen'];
-    fishName = fishName[0].toUpperCase() + fishName.substring(1);
+    String bugName = bugs[index]['name']['name-USen'];
+    bugName = bugName[0].toUpperCase() + bugName.substring(1);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Fish"),
-        backgroundColor: Colors.blue,
+        title: Text("Bug"),
+        backgroundColor: Colors.orange,
       ),
-      backgroundColor: Colors.blue.shade50,
+      backgroundColor: Colors.yellow.shade50,
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(10),
           child: Column(
             children: [
               Text(
-                fishName,
+                bugName,
                 style: TextStyle(fontSize: 24),
               ),
-              Image(image: NetworkImage(fish[index]['image_uri'])),
+              Image(image: NetworkImage(bugs[index]['image_uri'])),
               Text(
-                fish[index]['catch-phrase'],
+                bugs[index]['catch-phrase'],
                 style: TextStyle(color: Colors.grey.shade600),
               ),
               const SizedBox(
@@ -135,7 +135,7 @@ class _FishViewState extends State<FishView> {
     return [
       Container(
         padding: EdgeInsets.all(4),
-        color: Colors.blue.shade100,
+        color: Colors.yellow.shade100,
         child: Text(
           lhs,
           style: TextStyle(fontSize: textSize),
@@ -144,7 +144,7 @@ class _FishViewState extends State<FishView> {
       ),
       Container(
           padding: EdgeInsets.all(4),
-          color: Colors.blue.shade200,
+          color: Colors.yellow.shade200,
           child: Text(
             rhs,
             style: TextStyle(fontSize: textSize),
@@ -156,19 +156,19 @@ class _FishViewState extends State<FishView> {
   void _generateTextGrid() {
     setState(() {
       textGrid.addAll(
-          _drawTextPair("Location", fish[index]['availability']['location']));
+          _drawTextPair("Location", bugs[index]['availability']['location']));
       textGrid.addAll(_drawTextPair(
           "Availability",
-          fish[index]['availability']['isAllDay']
+          bugs[index]['availability']['isAllDay']
               ? 'All day'
-              : fish[index]['availability']['time']));
+              : bugs[index]['availability']['time']));
       textGrid.addAll(
-          _drawTextPair("Rarity", fish[index]['availability']['rarity']));
+          _drawTextPair("Rarity", bugs[index]['availability']['rarity']));
       //textGrid.addAll(_drawTextPair("Availability", "All day"));
-      textGrid.addAll(_drawTextPair("Shadow size", fish[index]['shadow']));
-      textGrid.addAll(_drawTextPair("Price", fish[index]['price'].toString()));
-      textGrid.addAll(
-          _drawTextPair("CJ's price", fish[index]['price-cj'].toString()));
+      //textGrid.addAll(_drawTextPair("Shadow size", bugs[index]['shadow']));
+      textGrid.addAll(_drawTextPair("Price", bugs[index]['price'].toString()));
+      textGrid.addAll(_drawTextPair(
+          "Flick's price", bugs[index]['price-flick'].toString()));
     });
   }
 }

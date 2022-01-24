@@ -18,13 +18,14 @@ class _ButtonGridState extends State<ButtonGrid> {
       padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
       child: Container(
         child: GridView(
-          gridDelegate:
-              SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3, mainAxisSpacing: 6, crossAxisSpacing: 3),
           shrinkWrap: true,
           physics: NeverScrollableScrollPhysics(),
           children: [
+            //TODO: Refactor this, maybe?
             OutlinedButton(
-                onPressed: () {},
+                onPressed: _showCritterSearch,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: Column(
@@ -96,6 +97,8 @@ class _ButtonGridState extends State<ButtonGrid> {
       ),
     ));
   }
+
+  void _showCritterSearch() {}
 }
 
 /*
