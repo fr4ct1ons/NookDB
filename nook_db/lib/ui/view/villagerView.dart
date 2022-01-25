@@ -50,10 +50,10 @@ class _VillagerViewState extends State<VillagerView> {
               ),
               Text(
                 villager.catchphrase,
-                style: TextStyle(color: Colors.grey.shade600),
+                style: TextStyle(color: Colors.grey.shade600, fontSize: 20),
               ),
               const SizedBox(
-                height: 15,
+                height: 10,
               ),
               GridView(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
