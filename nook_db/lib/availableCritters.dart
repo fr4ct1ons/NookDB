@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:nook_db/bugView.dart';
-import 'package:nook_db/fishView.dart';
+import 'package:nook_db/ui/view/bugView.dart';
+import 'package:nook_db/ui/view/fishView.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:nook_db/seaCreatureView.dart';
+import 'package:nook_db/ui/view/seaCreatureView.dart';
 import 'structs.dart';
 
 class AvailableCritters extends StatefulWidget {

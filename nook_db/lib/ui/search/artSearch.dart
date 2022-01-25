@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:nook_db/artView.dart';
+import 'package:nook_db/ui/view/artView.dart';
 import 'package:nook_db/availableCritters.dart';
-import 'package:nook_db/bugView.dart';
+import 'package:nook_db/ui/view/bugView.dart';
 import 'package:nook_db/buttonGrid.dart';
-import 'package:nook_db/fishView.dart';
-import 'package:nook_db/itemView.dart';
-import 'package:nook_db/seaCreatureView.dart';
+import 'package:nook_db/ui/view/fishView.dart';
+import 'package:nook_db/ui/view/itemView.dart';
+import 'package:nook_db/ui/view/seaCreatureView.dart';
 import 'package:nook_db/structs.dart';
-import 'todoList.dart';
+import '../../todoList.dart';
 
 class ArtSearch extends StatefulWidget {
   const ArtSearch({Key? key}) : super(key: key);

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nook_db/artSearch.dart';
-import 'package:nook_db/critterSearch.dart';
-import 'package:nook_db/itemSearch.dart';
+import 'package:nook_db/ui/search/artSearch.dart';
+import 'package:nook_db/ui/search/critterSearch.dart';
+import 'package:nook_db/ui/search/itemSearch.dart';
 
 class ButtonGrid extends StatefulWidget {
   const ButtonGrid({Key? key}) : super(key: key);

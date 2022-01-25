@@ -26,6 +26,31 @@ class _HomePageState extends State<HomePage> {
     _getItemsWall();
     _getItemsMisc();
     _getArt();
+    _getFossils();
+  }
+
+  void _getFossils() async {
+    const dataUrl = "https://acnhapi.com/v1/fossils/";
+    final response = await http.get(Uri.parse(dataUrl));
+
+    var temp = (json.decode(response.body)) as Map;
+
+    //print('Fish: ${temp['bitterling']}');
+
+    var tempI = temp.entries.map((e) => e.value).toList();
+
+    print("Item: ${tempI[0]}");
+
+    for (var i = 0; i < tempI.length; i++) {
+      Fossil newFossil = Fossil();
+
+      newFossil.usName = tempI[i]['name']['name-USen'];
+      newFossil.imageUrl = tempI[i]['image_uri'];
+      newFossil.price = tempI[i]['price'];
+      newFossil.museumPhrase = tempI[i]['museum-phrase'];
+
+      fossils.add(newFossil);
+    }
   }
 
   void _getArt() async {
@@ -38,7 +63,7 @@ class _HomePageState extends State<HomePage> {
 
     var tempI = temp.entries.map((e) => e.value).toList();
 
-    print("Item: ${tempI[0]}");
+    //print("Item: ${tempI[0]}");
 
     for (var i = 0; i < tempI.length; i++) {
       Art newItem = Art();

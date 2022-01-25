@@ -82,3 +82,18 @@ class Art {
     return usName[0].toUpperCase() + usName.substring(1);
   }
 }
+
+//FOSSILS
+
+List<Fossil> fossils = [];
+
+class Fossil {
+  String usName = '';
+  int price = -1;
+  String museumPhrase = '';
+  String imageUrl = '';
+
+  String uppercaseName() {
+    return usName[0].toUpperCase() + usName.substring(1);
+  }
+}
