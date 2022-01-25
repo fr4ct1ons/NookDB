@@ -136,7 +136,7 @@ class _ItemViewState extends State<ItemView> {
       textGrid.addAll(_drawTextPair("Purchase price",
           item.buyPrice == -1 ? "Unpurchasable" : item.buyPrice.toString()));
       textGrid.addAll(_drawTextPair("Sell price",
-          item.sellPrice == -1 ? "Non-sellable" : item.buyPrice.toString()));
+          item.sellPrice == -1 ? "Non-sellable" : item.sellPrice.toString()));
       textGrid.addAll(_drawTextPair("Found at", item.source));
       textGrid.addAll(_drawTextPair("Is D.I.Y", item.isDiy ? "Yes" : "No"));
       //textGrid.addAll(_drawTextPair("CJ's price", fish.priceCj.toString()));

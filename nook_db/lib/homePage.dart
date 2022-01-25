@@ -25,6 +25,33 @@ class _HomePageState extends State<HomePage> {
     _getItems();
     _getItemsWall();
     _getItemsMisc();
+    _getArt();
+  }
+
+  void _getArt() async {
+    const dataUrl = "http://acnhapi.com/v1/art/";
+    final response = await http.get(Uri.parse(dataUrl));
+
+    var temp = (json.decode(response.body)) as Map;
+
+    //print('Fish: ${temp['bitterling']}');
+
+    var tempI = temp.entries.map((e) => e.value).toList();
+
+    print("Item: ${tempI[0]}");
+
+    for (var i = 0; i < tempI.length; i++) {
+      Art newItem = Art();
+
+      newItem.usName = tempI[i]['name']['name-USen'];
+      newItem.buyPrice = tempI[i]['buy-price'] ?? -1;
+      newItem.imageUrl = tempI[i]['image_uri'];
+      newItem.hasFake = tempI[i]['hasFake'];
+      newItem.sellPrice = tempI[i]['sell-price'] ?? -1;
+      newItem.museumDesc = tempI[i]['museum-desc'];
+
+      artPieces.add(newItem);
+    }
   }
 
   void _getItems() async {

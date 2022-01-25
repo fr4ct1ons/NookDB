@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nook_db/artSearch.dart';
 import 'package:nook_db/critterSearch.dart';
 import 'package:nook_db/itemSearch.dart';
 
@@ -39,7 +40,7 @@ class _ButtonGridState extends State<ButtonGrid> {
                   ),
                 )),
             OutlinedButton(
-                onPressed: () {},
+                onPressed: _showArtSearch,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: Column(
@@ -112,6 +113,14 @@ class _ButtonGridState extends State<ButtonGrid> {
     await Navigator.push(context, MaterialPageRoute(
       builder: (context) {
         return ItemSearch();
+      },
+    ));
+  }
+
+  void _showArtSearch() async {
+    await Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return ArtSearch();
       },
     ));
   }

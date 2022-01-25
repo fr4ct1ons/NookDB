@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nook_db/artView.dart';
 import 'package:nook_db/availableCritters.dart';
 import 'package:nook_db/bugView.dart';
 import 'package:nook_db/buttonGrid.dart';
@@ -8,14 +9,14 @@ import 'package:nook_db/seaCreatureView.dart';
 import 'package:nook_db/structs.dart';
 import 'todoList.dart';
 
-class ItemSearch extends StatefulWidget {
-  const ItemSearch({Key? key}) : super(key: key);
+class ArtSearch extends StatefulWidget {
+  const ArtSearch({Key? key}) : super(key: key);
 
   @override
-  State<ItemSearch> createState() => _ItemSearchState();
+  State<ArtSearch> createState() => _ArtSearchState();
 }
 
-class _ItemSearchState extends State<ItemSearch> {
+class _ArtSearchState extends State<ArtSearch> {
   String searchQuery = '';
 
   @override
@@ -31,49 +32,17 @@ class _ItemSearchState extends State<ItemSearch> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             TextField(
-              decoration: InputDecoration(labelText: "Item name"),
+              decoration: InputDecoration(labelText: "Art piece name"),
               onChanged: (value) {
                 setState(() {
                   searchQuery = value;
                 });
               },
             ),
-            /*Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Checkbox(
-                  value: showFish,
-                  onChanged: (value) {
-                    setState(() {
-                      showFish = value!;
-                    });
-                  },
-                ),
-                Text("Fish"),
-                Checkbox(
-                  value: showBugs,
-                  onChanged: (value) {
-                    setState(() {
-                      showBugs = value!;
-                    });
-                  },
-                ),
-                Text("Bugs"),
-                Checkbox(
-                  value: showCreatures,
-                  onChanged: (value) {
-                    setState(() {
-                      showCreatures = value!;
-                    });
-                  },
-                ),
-                Text("Creatures"),
-              ],
-            ),*/
             Expanded(
               child: ListView.builder(
                 itemBuilder: _listBuilder,
-                itemCount: items.length,
+                itemCount: artPieces.length,
               ),
             )
           ],
@@ -86,9 +55,12 @@ class _ItemSearchState extends State<ItemSearch> {
     Color bg = Colors.white;
 
     if (searchQuery.isNotEmpty) {
-      if (searchQuery.length <= items[i].usName.length) {
+      if (searchQuery.length <= artPieces[i].usName.length) {
         if (searchQuery.toLowerCase() !=
-            items[i].usName.toLowerCase().substring(0, searchQuery.length)) {
+            artPieces[i]
+                .usName
+                .toLowerCase()
+                .substring(0, searchQuery.length)) {
           return SizedBox.shrink();
         }
       } else {
@@ -97,7 +69,7 @@ class _ItemSearchState extends State<ItemSearch> {
     }
     return GestureDetector(
       onTap: () {
-        _showItem(items[i]);
+        _showArt(artPieces[i]);
       },
       child: Card(
         color: bg,
@@ -105,7 +77,7 @@ class _ItemSearchState extends State<ItemSearch> {
           children: [
             Image(
               height: 110,
-              image: NetworkImage(items[i].imageUrl),
+              image: NetworkImage(artPieces[i].imageUrl),
             ),
             SizedBox(
               width: 8,
@@ -114,17 +86,17 @@ class _ItemSearchState extends State<ItemSearch> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  items[i].uppercaseName(),
+                  artPieces[i].uppercaseName(),
                   style: TextStyle(fontSize: 20),
                 ),
                 Text(
-                  "Purchase for: ${items[i].buyPrice == -1 ? 'Non-purchasable' : items[i].buyPrice}",
+                  "Purchase for: ${artPieces[i].buyPrice == -1 ? 'Non-purchasable' : artPieces[i].buyPrice}",
                   style: TextStyle(fontSize: 16),
                 ),
                 Row(
                   children: [
                     Text(
-                      "Sell for: ${items[i].sellPrice == -1 ? 'Non-sellable' : items[i].sellPrice}",
+                      "Sell for: ${artPieces[i].sellPrice == -1 ? 'Non-sellable' : artPieces[i].sellPrice}",
                       style: TextStyle(fontSize: 16),
                     ),
                   ],
@@ -137,11 +109,11 @@ class _ItemSearchState extends State<ItemSearch> {
     );
   }
 
-  void _showItem(Item item) async {
+  void _showArt(Art art) async {
     await Navigator.push(context, MaterialPageRoute(
       builder: (context) {
-        return ItemView(
-          item: item,
+        return ArtView(
+          art: art,
         );
       },
     ));

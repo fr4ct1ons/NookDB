@@ -65,3 +65,20 @@ class Item {
     return usName[0].toUpperCase() + usName.substring(1);
   }
 }
+
+// ART
+
+List<Art> artPieces = [];
+
+class Art {
+  String usName = '';
+  bool hasFake = false;
+  int buyPrice = -1;
+  int sellPrice = -1;
+  String imageUrl = '';
+  String museumDesc = '';
+
+  String uppercaseName() {
+    return usName[0].toUpperCase() + usName.substring(1);
+  }
+}
