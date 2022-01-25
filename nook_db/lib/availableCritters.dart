@@ -96,6 +96,7 @@ class _AvailableCrittersState extends State<AvailableCritters> {
     setState(() {
       for (var i = 0; i < crts.length; i++) {
         Creature newCritter = Creature();
+        newCritter.id = i;
         newCritter.usName = crts[i]['name']['name-USen'];
         newCritter.monthArrayNorth =
             crts[i]["availability"]["month-array-northern"].cast<int>();
@@ -159,6 +160,7 @@ class _AvailableCrittersState extends State<AvailableCritters> {
     setState(() {
       for (var i = 0; i < fish.length; i++) {
         Fish newFish = Fish();
+        newFish.id = i;
         newFish.usName = fish[i]['name']['name-USen'];
         newFish.monthArrayNorth =
             fish[i]["availability"]["month-array-northern"].cast<int>();
@@ -222,6 +224,7 @@ class _AvailableCrittersState extends State<AvailableCritters> {
     setState(() {
       for (var i = 0; i < bugs.length; i++) {
         Bug newCritter = Bug();
+        newCritter.id = i;
         newCritter.usName = bugs[i]['name']['name-USen'];
         newCritter.monthArrayNorth =
             bugs[i]["availability"]["month-array-northern"].cast<int>();

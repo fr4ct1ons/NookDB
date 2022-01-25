@@ -47,7 +47,7 @@ class _ButtonGridState extends State<ButtonGrid> {
                   padding: const EdgeInsets.only(top: 12),
                   child: Column(
                     children: const [
-                      Image(height: 64, image: AssetImage("assets/items.png")),
+                      Image(height: 64, image: AssetImage("assets/art.png")),
                       Text('Art'),
                     ],
                   ),

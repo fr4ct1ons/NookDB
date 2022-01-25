@@ -6,6 +6,7 @@ import 'package:nook_db/buttonGrid.dart';
 import 'package:nook_db/structs.dart';
 import 'todoList.dart';
 import 'package:http/http.dart' as http;
+import 'database.dart' as db;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -22,12 +23,17 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
 
-    _getItems();
-    _getItemsWall();
-    _getItemsMisc();
-    _getArt();
-    _getFossils();
-    _getVillagers();
+    db.startDatabase().then((_) {
+      db.getTracked().then((value) {
+        //Getting everything
+        _getItems();
+        _getItemsWall();
+        _getItemsMisc();
+        _getArt();
+        _getFossils();
+        _getVillagers();
+      });
+    });
   }
 
   void _getVillagers() async {
@@ -40,7 +46,7 @@ class _HomePageState extends State<HomePage> {
 
     var tempI = temp.entries.map((e) => e.value).toList();
 
-    print("Item: ${tempI[0]}");
+    //print("Item: ${tempI[0]}");
 
     for (var i = 0; i < tempI.length; i++) {
       Villager newVillager = Villager();
@@ -69,7 +75,7 @@ class _HomePageState extends State<HomePage> {
 
     var tempI = temp.entries.map((e) => e.value).toList();
 
-    print("Item: ${tempI[0]}");
+    //print("Item: ${tempI[0]}");
 
     for (var i = 0; i < tempI.length; i++) {
       Fossil newFossil = Fossil();
@@ -119,7 +125,7 @@ class _HomePageState extends State<HomePage> {
 
     var tempI = temp.entries.map((e) => e.value).toList();
 
-    print("Item: ${tempI[0][0]['source-detail']}");
+    //print("Item: ${tempI[0][0]['source-detail']}");
 
     for (var i = 0; i < tempI.length; i++) {
       Item newItem = Item();
@@ -150,7 +156,7 @@ class _HomePageState extends State<HomePage> {
 
     var tempI = temp.entries.map((e) => e.value).toList();
 
-    print("Item: ${tempI[0][0]['source-detail']}");
+    //print("Item: ${tempI[0][0]['source-detail']}");
 
     for (var i = 0; i < tempI.length; i++) {
       Item newItem = Item();
@@ -181,7 +187,7 @@ class _HomePageState extends State<HomePage> {
 
     var tempI = temp.entries.map((e) => e.value).toList();
 
-    print("Item: ${tempI[0][0]['source-detail']}");
+    //print("Item: ${tempI[0][0]['source-detail']}");
 
     for (var i = 0; i < tempI.length; i++) {
       Item newItem = Item();
@@ -232,4 +238,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+//Critters
+
 }

@@ -1,6 +1,7 @@
 List<Critter> critters = [];
 
 class Critter {
+  int id = 0;
   String usName = '';
   String time = '';
   List<int> timeArray = [];
