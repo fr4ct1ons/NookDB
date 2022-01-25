@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nook_db/ui/search/artSearch.dart';
 import 'package:nook_db/ui/search/critterSearch.dart';
+import 'package:nook_db/ui/search/fossilSearch.dart';
 import 'package:nook_db/ui/search/itemSearch.dart';
 
 class ButtonGrid extends StatefulWidget {
@@ -73,7 +74,7 @@ class _ButtonGridState extends State<ButtonGrid> {
                   ),
                 )),
             OutlinedButton(
-                onPressed: () {},
+                onPressed: _showFossilSearch,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: Column(
@@ -121,6 +122,14 @@ class _ButtonGridState extends State<ButtonGrid> {
     await Navigator.push(context, MaterialPageRoute(
       builder: (context) {
         return ArtSearch();
+      },
+    ));
+  }
+
+  void _showFossilSearch() async {
+    await Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return FossilSearch();
       },
     ));
   }
