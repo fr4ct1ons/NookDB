@@ -32,7 +32,7 @@ class _AvailableCrittersState extends State<AvailableCritters> {
     return Expanded(
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4, mainAxisSpacing: 8, crossAxisSpacing: 8),
+            crossAxisCount: 5, mainAxisSpacing: 8, crossAxisSpacing: 8),
         itemCount: _buttons.length,
         padding: EdgeInsets.all(12),
         itemBuilder: (context, index) {

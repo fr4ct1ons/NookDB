@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nook_db/critterSearch.dart';
+import 'package:nook_db/itemSearch.dart';
 
 class ButtonGrid extends StatefulWidget {
   const ButtonGrid({Key? key}) : super(key: key);
@@ -49,7 +50,7 @@ class _ButtonGridState extends State<ButtonGrid> {
                   ),
                 )),
             OutlinedButton(
-                onPressed: () {},
+                onPressed: _showItemSearch,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: Column(
@@ -106,7 +107,17 @@ class _ButtonGridState extends State<ButtonGrid> {
       },
     ));
   }
+
+  void _showItemSearch() async {
+    await Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return ItemSearch();
+      },
+    ));
+  }
 }
+
+
 
 /*
 GridView.count(

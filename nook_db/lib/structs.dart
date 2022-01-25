@@ -44,3 +44,24 @@ class Creature extends Critter {
   String speed = '';
   String shadow = '';
 }
+
+//ITEMS
+
+List<Item> items = [];
+
+class Item {
+  String usName = '';
+  String imageUrl = '';
+  int buyPrice = 0;
+  int sellPrice = 0;
+  bool isDiy = false;
+  String source = '', sourceDetail = '';
+  String size = '';
+  bool isCatalog = false;
+  bool bodyCustomizable = false;
+  bool patternCustomizable = false;
+
+  String uppercaseName() {
+    return usName[0].toUpperCase() + usName.substring(1);
+  }
+}
