@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:nook_db/ui/search/villagerSearch.dart';
 import 'package:nook_db/ui/view/artView.dart';
 import 'package:nook_db/structs.dart';
 import 'package:nook_db/ui/view/fossilView.dart';
+import 'package:nook_db/ui/view/villagerView.dart';
 
-class FossilSearch extends StatefulWidget {
-  const FossilSearch({Key? key}) : super(key: key);
+class VillagerSearch extends StatefulWidget {
+  const VillagerSearch({Key? key}) : super(key: key);
 
   @override
-  State<FossilSearch> createState() => _FossilSearchState();
+  State<VillagerSearch> createState() => _VillagerSearchState();
 }
 
-class _FossilSearchState extends State<FossilSearch> {
+class _VillagerSearchState extends State<VillagerSearch> {
   String searchQuery = '';
 
   @override
@@ -18,7 +20,7 @@ class _FossilSearchState extends State<FossilSearch> {
     return Scaffold(
       backgroundColor: Colors.orange.shade50,
       appBar: AppBar(
-        title: const Text("Search Fossils"),
+        title: const Text("Search villager"),
       ),
       body: Padding(
         padding: EdgeInsets.all(8),
@@ -26,7 +28,7 @@ class _FossilSearchState extends State<FossilSearch> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             TextField(
-              decoration: InputDecoration(labelText: "Fossil name"),
+              decoration: InputDecoration(labelText: "Villager name"),
               onChanged: (value) {
                 setState(() {
                   searchQuery = value;
@@ -36,7 +38,7 @@ class _FossilSearchState extends State<FossilSearch> {
             Expanded(
               child: ListView.builder(
                 itemBuilder: _listBuilder,
-                itemCount: fossils.length,
+                itemCount: villagers.length,
               ),
             )
           ],
@@ -49,9 +51,12 @@ class _FossilSearchState extends State<FossilSearch> {
     Color bg = Colors.white;
 
     if (searchQuery.isNotEmpty) {
-      if (searchQuery.length <= fossils[i].usName.length) {
+      if (searchQuery.length <= villagers[i].usName.length) {
         if (searchQuery.toLowerCase() !=
-            fossils[i].usName.toLowerCase().substring(0, searchQuery.length)) {
+            villagers[i]
+                .usName
+                .toLowerCase()
+                .substring(0, searchQuery.length)) {
           return SizedBox.shrink();
         }
       } else {
@@ -60,7 +65,7 @@ class _FossilSearchState extends State<FossilSearch> {
     }
     return GestureDetector(
       onTap: () {
-        _showFossil(fossils[i]);
+        _showVillager(villagers[i]);
       },
       child: Card(
         color: bg,
@@ -68,18 +73,18 @@ class _FossilSearchState extends State<FossilSearch> {
           children: [
             Image(
               height: 110,
-              image: NetworkImage(fossils[i].imageUrl),
+              image: NetworkImage(villagers[i].iconUrl),
             ),
             SizedBox(
               width: 8,
             ),
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
-                fossils[i].uppercaseName(),
+                villagers[i].uppercaseName(),
                 style: TextStyle(fontSize: 20),
               ),
               Text(
-                "Price: ${fossils[i].price == -1 ? 'Non-purchasable' : fossils[i].price}",
+                "Birthday: ${villagers[i].birthdayName}",
                 style: TextStyle(fontSize: 16),
               ),
             ]),
@@ -89,11 +94,11 @@ class _FossilSearchState extends State<FossilSearch> {
     );
   }
 
-  void _showFossil(Fossil fossil) async {
+  void _showVillager(Villager villager) async {
     await Navigator.push(context, MaterialPageRoute(
       builder: (context) {
-        return FossilView(
-          fossil: fossil,
+        return VillagerView(
+          villager: villager,
         );
       },
     ));

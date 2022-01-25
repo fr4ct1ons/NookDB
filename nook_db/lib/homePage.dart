@@ -27,6 +27,36 @@ class _HomePageState extends State<HomePage> {
     _getItemsMisc();
     _getArt();
     _getFossils();
+    _getVillagers();
+  }
+
+  void _getVillagers() async {
+    const dataUrl = "http://acnhapi.com/v1/villagers/";
+    final response = await http.get(Uri.parse(dataUrl));
+
+    var temp = (json.decode(response.body)) as Map;
+
+    //print('Fish: ${temp['bitterling']}');
+
+    var tempI = temp.entries.map((e) => e.value).toList();
+
+    print("Item: ${tempI[0]}");
+
+    for (var i = 0; i < tempI.length; i++) {
+      Villager newVillager = Villager();
+
+      newVillager.usName = tempI[i]['name']['name-USen'];
+      newVillager.imageUrl = tempI[i]['image_uri'];
+      newVillager.birthdayDate = tempI[i]['birthday'];
+      newVillager.birthdayName = tempI[i]['birthday-string'];
+      newVillager.catchphrase = tempI[i]['catch-phrase'];
+      newVillager.gender = tempI[i]['gender'];
+      newVillager.iconUrl = tempI[i]['icon_uri'];
+      newVillager.personality = tempI[i]['personality'];
+      newVillager.species = tempI[i]['species'];
+
+      villagers.add(newVillager);
+    }
   }
 
   void _getFossils() async {

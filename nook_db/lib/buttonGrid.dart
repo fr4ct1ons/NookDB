@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nook_db/ui/search/VillagerSearch.dart';
 import 'package:nook_db/ui/search/artSearch.dart';
 import 'package:nook_db/ui/search/critterSearch.dart';
 import 'package:nook_db/ui/search/fossilSearch.dart';
@@ -63,7 +64,7 @@ class _ButtonGridState extends State<ButtonGrid> {
                   ),
                 )),
             OutlinedButton(
-                onPressed: () {},
+                onPressed: _showVillagerSearch,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: Column(
@@ -130,6 +131,14 @@ class _ButtonGridState extends State<ButtonGrid> {
     await Navigator.push(context, MaterialPageRoute(
       builder: (context) {
         return FossilSearch();
+      },
+    ));
+  }
+
+  void _showVillagerSearch() async {
+    await Navigator.push(context, MaterialPageRoute(
+      builder: (context) {
+        return VillagerSearch();
       },
     ));
   }

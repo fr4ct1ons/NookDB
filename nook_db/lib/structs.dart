@@ -97,3 +97,20 @@ class Fossil {
     return usName[0].toUpperCase() + usName.substring(1);
   }
 }
+
+List<Villager> villagers = [];
+
+class Villager {
+  String usName = '';
+  String personality = '';
+  String birthdayName = '', birthdayDate = '';
+  String gender = '';
+  String species = '';
+  String catchphrase = '';
+  String imageUrl = '';
+  String iconUrl = '';
+
+  String uppercaseName() {
+    return usName[0].toUpperCase() + usName.substring(1);
+  }
+}
