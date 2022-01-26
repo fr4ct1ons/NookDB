@@ -38,7 +38,7 @@ class _TodoListState extends State<TodoList> {
               style: TextStyle(fontSize: 24.0),
             ),
             Container(
-              height: 190,
+              height: 140,
               child: ListView.builder(
                 itemCount: items.length,
                 itemBuilder: (context, index) {

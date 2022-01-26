@@ -44,6 +44,37 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.orange.shade50,
+      appBar: AppBar(
+        title: const Text("NookDB"),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(height: 15),
+            TodoList(),
+            ButtonGrid(),
+            SizedBox(
+              height: 7,
+            ),
+            Text(
+              "Available critters",
+              style: TextStyle(fontSize: 24),
+            ),
+            SizedBox(
+              height: 7,
+            ),
+            availableCritters
+          ],
+        ),
+      ),
+    );
+  }
+
   Future<void> _getVillagers() async {
     const dataUrl = "http://acnhapi.com/v1/villagers/";
     final response = await http.get(Uri.parse(dataUrl));
@@ -214,37 +245,6 @@ class _HomePageState extends State<HomePage> {
 
       items.add(newItem);
     }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.orange.shade50,
-      appBar: AppBar(
-        title: const Text("NookDB"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(height: 15),
-            TodoList(),
-            ButtonGrid(),
-            SizedBox(
-              height: 7,
-            ),
-            Text(
-              "Available critters",
-              style: TextStyle(fontSize: 24),
-            ),
-            SizedBox(
-              height: 7,
-            ),
-            availableCritters
-          ],
-        ),
-      ),
-    );
   }
 
 //Critters

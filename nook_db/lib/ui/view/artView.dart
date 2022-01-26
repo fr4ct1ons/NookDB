@@ -46,7 +46,11 @@ class _ArtViewState extends State<ArtView> {
                 bugName,
                 style: TextStyle(fontSize: 24),
               ),
-              Image(image: NetworkImage(art.imageUrl)),
+              Image(
+                image: NetworkImage(art.imageUrl),
+                height: 256,
+                fit: BoxFit.fitHeight,
+              ),
               const SizedBox(
                 height: 15,
               ),

@@ -46,7 +46,11 @@ class _FossilViewState extends State<FossilView> {
                 bugName,
                 style: TextStyle(fontSize: 24),
               ),
-              Image(image: NetworkImage(fossil.imageUrl)),
+              Image(
+                image: NetworkImage(fossil.imageUrl),
+                height: 256,
+                fit: BoxFit.fitHeight,
+              ),
               const SizedBox(
                 height: 15,
               ),
