@@ -31,7 +31,7 @@ class _VillagerViewState extends State<VillagerView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Fish"),
+        title: Text("Villager"),
         backgroundColor: Colors.green,
       ),
       backgroundColor: Colors.green.shade50,

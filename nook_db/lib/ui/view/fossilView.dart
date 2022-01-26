@@ -33,7 +33,7 @@ class _FossilViewState extends State<FossilView> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Art piece"),
+        title: Text("Fossil"),
         backgroundColor: Colors.brown,
       ),
       backgroundColor: Colors.brown.shade50,
