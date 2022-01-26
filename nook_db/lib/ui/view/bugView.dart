@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nook_db/structs.dart';
+import 'package:nook_db/database.dart' as db;
 
 class BugView extends StatefulWidget {
   BugView({Key? key, required this.bug}) : super(key: key);
@@ -10,6 +11,7 @@ class BugView extends StatefulWidget {
 }
 
 class _BugViewState extends State<BugView> {
+  bool isTracked = false;
   List<Widget> textGrid = [];
   List<Widget> monthsGrid = [];
 
@@ -57,6 +59,12 @@ class _BugViewState extends State<BugView> {
         ),
         color: highlight,
       ));
+    }
+
+    if (db.trackedBug.containsKey(bug.id)) {
+      if (db.trackedBug[bug.id]!.isTracked()) {
+        isTracked = true;
+      }
     }
   }
 
@@ -115,15 +123,36 @@ class _BugViewState extends State<BugView> {
                 physics: NeverScrollableScrollPhysics(),
                 children: monthsGrid,
               ),
-              /*CheckboxListTile(
-                  value: true,
-                  onChanged: (val) {},
-                  title: Text("Track thi critter?")),*/
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Track this critter?"),
+                  Checkbox(value: isTracked, onChanged: _startTracking)
+                ],
+              )
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _startTracking(bool? val) {
+    if (db.trackedBug.containsKey(bug.id)) {
+      if (db.trackedBug[bug.id]!.isTracked()) {
+        if (val! == false) {
+          db.stopTrackingCritter(bug);
+          setState(() {
+            isTracked = false;
+          });
+        }
+      }
+    } else {
+      db.trackCritter(bug);
+      setState(() {
+        isTracked = true;
+      });
+    }
   }
 
   List<Widget> _drawTextPair(String lhs, String rhs) {

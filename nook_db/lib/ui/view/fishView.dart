@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nook_db/database.dart';
 import 'package:nook_db/structs.dart';
 
 class FishView extends StatefulWidget {
@@ -10,6 +11,7 @@ class FishView extends StatefulWidget {
 }
 
 class _FishViewState extends State<FishView> {
+  bool isTracked = false;
   List<Widget> textGrid = [];
   List<Widget> monthsGrid = [];
 
@@ -57,6 +59,12 @@ class _FishViewState extends State<FishView> {
         ),
         color: highlight,
       ));
+    }
+
+    if (trackedFish.containsKey(fish.id)) {
+      if (trackedFish[fish.id]!.isTracked()) {
+        isTracked = true;
+      }
     }
   }
 
@@ -114,6 +122,13 @@ class _FishViewState extends State<FishView> {
                 physics: NeverScrollableScrollPhysics(),
                 children: monthsGrid,
               ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Track this critter?"),
+                  Checkbox(value: isTracked, onChanged: _startTracking)
+                ],
+              )
               /*CheckboxListTile(
                   value: true,
                   onChanged: (val) {},
@@ -123,6 +138,24 @@ class _FishViewState extends State<FishView> {
         ),
       ),
     );
+  }
+
+  void _startTracking(bool? val) {
+    if (trackedFish.containsKey(fish.id)) {
+      if (trackedFish[fish.id]!.isTracked()) {
+        if (val! == false) {
+          stopTrackingCritter(fish);
+          setState(() {
+            isTracked = false;
+          });
+        }
+      }
+    } else {
+      trackCritter(fish);
+      setState(() {
+        isTracked = true;
+      });
+    }
   }
 
   List<Widget> _drawTextPair(String lhs, String rhs) {

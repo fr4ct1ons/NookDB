@@ -17,26 +17,34 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String userName = 'Villager';
+  Widget availableCritters = Text("Loading critters...");
 
   @override
   void initState() {
     // TODO: implement initState
-    super.initState();
+    //super.initState();
 
     db.startDatabase().then((_) {
+      //TODO: This is horrible, but flutter/dart async methods force my hand.
       db.getTracked().then((value) {
         //Getting everything
-        _getItems();
-        _getItemsWall();
-        _getItemsMisc();
-        _getArt();
-        _getFossils();
-        _getVillagers();
+        _getBugs() //
+            .then((value) => _getFish() //
+                .then((value) => _getSeaCreatures().then((value) => _getItems()
+                    .then((value) => _getItemsWall().then((value) =>
+                        _getItemsMisc().then((value) => _getArt().then(
+                            (value) => _getFossils()
+                                .then((value) => _getVillagers().then((value) {
+                                      print("done");
+                                      setState(() {
+                                        availableCritters = AvailableCritters();
+                                      });
+                                    })))))))));
       });
     });
   }
 
-  void _getVillagers() async {
+  Future<void> _getVillagers() async {
     const dataUrl = "http://acnhapi.com/v1/villagers/";
     final response = await http.get(Uri.parse(dataUrl));
 
@@ -65,7 +73,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _getFossils() async {
+  Future<void> _getFossils() async {
     const dataUrl = "https://acnhapi.com/v1/fossils/";
     final response = await http.get(Uri.parse(dataUrl));
 
@@ -89,7 +97,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _getArt() async {
+  Future<void> _getArt() async {
     const dataUrl = "http://acnhapi.com/v1/art/";
     final response = await http.get(Uri.parse(dataUrl));
 
@@ -115,7 +123,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _getItems() async {
+  Future<void> _getItems() async {
     const dataUrl = "http://acnhapi.com/v1/houseware/";
     final response = await http.get(Uri.parse(dataUrl));
 
@@ -146,7 +154,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _getItemsWall() async {
+  Future<void> _getItemsWall() async {
     const dataUrl = "http://acnhapi.com/v1/wallmounted/";
     final response = await http.get(Uri.parse(dataUrl));
 
@@ -177,7 +185,7 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void _getItemsMisc() async {
+  Future<void> _getItemsMisc() async {
     const dataUrl = "http://acnhapi.com/v1/misc/";
     final response = await http.get(Uri.parse(dataUrl));
 
@@ -218,7 +226,7 @@ class _HomePageState extends State<HomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          children: const <Widget>[
+          children: <Widget>[
             SizedBox(height: 15),
             TodoList(),
             ButtonGrid(),
@@ -232,7 +240,7 @@ class _HomePageState extends State<HomePage> {
             SizedBox(
               height: 7,
             ),
-            AvailableCritters()
+            availableCritters
           ],
         ),
       ),
@@ -241,4 +249,132 @@ class _HomePageState extends State<HomePage> {
 
 //Critters
 
+  var fish = <dynamic>[];
+  var bugs = <dynamic>[];
+  var crts = <dynamic>[];
+
+  Future<void> _getSeaCreatures() async {
+    //var fish = <dynamic>[];
+    const dataUrl = "http://acnhapi.com/v1/sea/";
+    final response = await http.get(Uri.parse(dataUrl));
+
+    var temp = (json.decode(response.body)) as Map;
+
+    //print('Fish: ${temp['bitterling']}');
+
+    crts = temp.entries.map((e) => e.value).toList();
+
+    setState(() {
+      for (var i = 0; i < crts.length; i++) {
+        Creature newCritter = Creature();
+        newCritter.id = i;
+        newCritter.usName = crts[i]['name']['name-USen'];
+        newCritter.monthArrayNorth =
+            crts[i]["availability"]["month-array-northern"].cast<int>();
+        ;
+        newCritter.monthArraySouth =
+            crts[i]["availability"]["month-array-southern"].cast<int>();
+        ;
+        newCritter.timeArray =
+            crts[i]['availability']['time-array'].cast<int>();
+        ;
+        newCritter.time = crts[i]['availability']['time'];
+        newCritter.isAllDay = crts[i]['availability']['isAllDay'];
+        newCritter.isAllYear = crts[i]['availability']['isAllYear'];
+        newCritter.iconUrl = crts[i]['icon_uri'];
+        newCritter.imageUrl = crts[i]['image_uri'];
+        newCritter.price = crts[i]['price'];
+        newCritter.catchPhrase = crts[i]['catch-phrase'];
+        newCritter.museumPhrase = crts[i]['museum-phrase'];
+
+        //newCritter.location = fish[i]['availability']["location"]; //Sea Creatures don't use location
+        newCritter.speed = crts[i]['speed'];
+        newCritter.shadow = crts[i]['shadow'];
+        critters.add(newCritter);
+      }
+    });
+  }
+
+  Future<void> _getFish() async {
+    //var fish = <dynamic>[];
+    const dataUrl = "http://acnhapi.com/v1/fish/";
+    final response = await http.get(Uri.parse(dataUrl));
+
+    var temp = (json.decode(response.body)) as Map;
+
+    //print('Fish: ${temp['bitterling']}');
+
+    fish = temp.entries.map((e) => e.value).toList();
+
+    setState(() {
+      for (var i = 0; i < fish.length; i++) {
+        Fish newFish = Fish();
+        newFish.id = i;
+        newFish.usName = fish[i]['name']['name-USen'];
+        newFish.monthArrayNorth =
+            fish[i]["availability"]["month-array-northern"].cast<int>();
+        ;
+        newFish.monthArraySouth =
+            fish[i]["availability"]["month-array-southern"].cast<int>();
+        ;
+        newFish.timeArray = fish[i]['availability']['time-array'].cast<int>();
+        ;
+        newFish.time = fish[i]['availability']['time'];
+        newFish.isAllDay = fish[i]['availability']['isAllDay'];
+        newFish.isAllYear = fish[i]['availability']['isAllYear'];
+        newFish.iconUrl = fish[i]['icon_uri'];
+        newFish.imageUrl = fish[i]['image_uri'];
+        newFish.price = fish[i]['price'];
+        newFish.catchPhrase = fish[i]['catch-phrase'];
+        newFish.museumPhrase = fish[i]['museum-phrase'];
+
+        newFish.priceCj = fish[i]['price-cj'];
+        newFish.shadow = fish[i]['shadow'];
+        newFish.location = fish[i]['availability']["location"];
+        newFish.rarity = fish[i]['availability']["rarity"];
+
+        critters.add(newFish);
+      }
+    });
+  }
+
+  Future<void> _getBugs() async {
+    const dataUrl = "http://acnhapi.com/v1/bugs/";
+    final response = await http.get(Uri.parse(dataUrl));
+
+    var temp = (json.decode(response.body)) as Map;
+
+    //print('Fish: ${temp['bitterling']}');
+
+    bugs = temp.entries.map((e) => e.value).toList();
+
+    setState(() {
+      for (var i = 0; i < bugs.length; i++) {
+        Bug newCritter = Bug();
+        newCritter.id = i;
+        newCritter.usName = bugs[i]['name']['name-USen'];
+        newCritter.monthArrayNorth =
+            bugs[i]["availability"]["month-array-northern"].cast<int>();
+        newCritter.monthArraySouth =
+            bugs[i]["availability"]["month-array-southern"].cast<int>();
+        ;
+        newCritter.timeArray =
+            bugs[i]['availability']['time-array'].cast<int>();
+        newCritter.time = bugs[i]['availability']['time'];
+        newCritter.isAllDay = bugs[i]['availability']['isAllDay'];
+        newCritter.isAllYear = bugs[i]['availability']['isAllYear'];
+        newCritter.iconUrl = bugs[i]['icon_uri'];
+        newCritter.imageUrl = bugs[i]['image_uri'];
+        newCritter.price = bugs[i]['price'];
+        newCritter.catchPhrase = bugs[i]['catch-phrase'];
+        newCritter.museumPhrase = bugs[i]['museum-phrase'];
+
+        newCritter.priceFlick = bugs[i]['price-flick'];
+        newCritter.location = bugs[i]['availability']["location"];
+        newCritter.rarity = bugs[i]['availability']["rarity"];
+
+        critters.add(newCritter);
+      }
+    });
+  }
 }

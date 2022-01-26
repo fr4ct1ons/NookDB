@@ -7,7 +7,9 @@ enum CritterType { Bug, Fish, Creature }
 
 Future<Database>? database;
 
-Map<int, TrackedCritter> trackedCritters = {};
+Map<int, TrackedCritter> trackedFish = {};
+Map<int, TrackedCritter> trackedBug = {};
+Map<int, TrackedCritter> trackedCreature = {};
 
 class TrackedCritter {
   int tracked = 0;
@@ -22,20 +24,18 @@ class TrackedCritter {
   }
 
   Map<String, dynamic> toMap() {
-    return {'id': id, 'type': critterType, 'isTracked': tracked};
+    return {'id': id, 'type': critterType.index, 'isTracked': tracked};
   }
 }
 
 Future<void> startDatabase() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  database = openDatabase(
-    join(await getDatabasesPath(), 'trackedCritters.db'),
-    onCreate: (db, version) {
-      return db.execute(
-          "CREATE TABLE trackedCritter(id INTEGER PRIMARY KEY, type INTEGER, isTracked INTEGER");
-    },
-  );
+  database = openDatabase(join(await getDatabasesPath(), 'trackedCritters.db'),
+      onCreate: (db, version) {
+    return db.execute(
+        "CREATE TABLE trackedCritter(id INTEGER PRIMARY KEY, type INTEGER, isTracked INTEGER)");
+  }, version: 1);
 }
 
 Future<void> trackCritter(Critter critter) async {
@@ -43,11 +43,16 @@ Future<void> trackCritter(Critter critter) async {
   tracked.tracked = 1;
   tracked.id = critter.id;
 
-  if (critter is Bug)
+  if (critter is Bug) {
     tracked.critterType = CritterType.Bug;
-  else if (critter is Fish)
+    trackedBug[tracked.id] = tracked;
+  } else if (critter is Fish) {
     tracked.critterType = CritterType.Fish;
-  else if (critter is Creature) tracked.critterType = CritterType.Creature;
+    trackedFish[tracked.id] = tracked;
+  } else if (critter is Creature) {
+    tracked.critterType = CritterType.Creature;
+    trackedCreature[tracked.id] = tracked;
+  }
   final db = await database;
   db!.insert('trackedCritter', tracked.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace);
@@ -58,11 +63,16 @@ Future<void> stopTrackingCritter(Critter critter) async {
   tracked.tracked = 0;
   tracked.id = critter.id;
 
-  if (critter is Bug)
+  if (critter is Bug) {
     tracked.critterType = CritterType.Bug;
-  else if (critter is Fish)
+    trackedBug.remove(critter.id);
+  } else if (critter is Fish) {
     tracked.critterType = CritterType.Fish;
-  else if (critter is Creature) tracked.critterType = CritterType.Creature;
+    trackedFish.remove(critter.id);
+  } else if (critter is Creature) {
+    tracked.critterType = CritterType.Creature;
+    trackedCreature.remove(critter.id);
+  }
 
   final db = await database;
 
@@ -73,10 +83,26 @@ Future<void> getTracked() async {
   final db = await database;
   final List<Map<String, dynamic>> maps = await db!.query('trackedCritter');
 
-  List.generate(maps.length, (i) {
+  var temp = List.generate(maps.length, (i) {
     return TrackedCritter(
-        critterType: maps[i]['type'],
+        critterType: CritterType.values[maps[i]['type']],
         id: maps[i]['id'],
         tracked: maps[i]['isTracked']);
   });
+
+  for (var i = 0; i < temp.length; i++) {
+    var element = temp[i];
+    switch (element.critterType) {
+      case CritterType.Bug:
+        trackedBug[element.id] = element;
+        break;
+      case CritterType.Fish:
+        trackedFish[element.id] = element;
+        break;
+      case CritterType.Creature:
+        trackedCreature[element.id] = element;
+        break;
+      default:
+    }
+  }
 }

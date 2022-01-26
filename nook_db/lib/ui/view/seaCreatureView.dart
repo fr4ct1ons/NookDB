@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nook_db/structs.dart';
+import 'package:nook_db/database.dart' as db;
 
 class SeaCreatureView extends StatefulWidget {
   SeaCreatureView({Key? key, required this.creature}) : super(key: key);
@@ -29,6 +30,7 @@ class _SeaCreatureViewState extends State<SeaCreatureView> {
   ];
 
   Creature creature = Creature();
+  bool isTracked = false;
 
   @override
   void initState() {
@@ -57,6 +59,12 @@ class _SeaCreatureViewState extends State<SeaCreatureView> {
         ),
         color: highlight,
       ));
+    }
+
+    if (db.trackedCreature.containsKey(creature.id)) {
+      if (db.trackedCreature[creature.id]!.isTracked()) {
+        isTracked = true;
+      }
     }
   }
 
@@ -115,15 +123,36 @@ class _SeaCreatureViewState extends State<SeaCreatureView> {
                 physics: NeverScrollableScrollPhysics(),
                 children: monthsGrid,
               ),
-              /*CheckboxListTile(
-                  value: true,
-                  onChanged: (val) {},
-                  title: Text("Track thi critter?")),*/
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Track this critter?"),
+                  Checkbox(value: isTracked, onChanged: _startTracking)
+                ],
+              )
             ],
           ),
         ),
       ),
     );
+  }
+
+  void _startTracking(bool? val) {
+    if (db.trackedCreature.containsKey(creature.id)) {
+      if (db.trackedCreature[creature.id]!.isTracked()) {
+        if (val! == false) {
+          db.stopTrackingCritter(creature);
+          setState(() {
+            isTracked = false;
+          });
+        }
+      }
+    } else {
+      db.trackCritter(creature);
+      setState(() {
+        isTracked = true;
+      });
+    }
   }
 
   List<Widget> _drawTextPair(String lhs, String rhs) {
