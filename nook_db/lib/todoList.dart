@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'database.dart' as db;
 
 class TodoList extends StatefulWidget {
   const TodoList({Key? key}) : super(key: key);
@@ -9,7 +10,14 @@ class TodoList extends StatefulWidget {
 
 class _TodoListState extends State<TodoList> {
   @override
-  List<String> items = [];
+  List<String> items = [
+      'Check turnip prices',
+      'Water crops',
+      'Dig money rock',
+      'Talk with villagers',
+      'Check Nook\'s Cranny',
+      'Check Able Sisters'
+    ];
   List<bool> itemStatus = [];
 
   @override
@@ -17,13 +25,14 @@ class _TodoListState extends State<TodoList> {
     // TODO: implement initState
     super.initState();
 
-    items = [
-      'Check turnip prices',
-      'Water crops',
-      'Dig money rock',
-    ];
-
     itemStatus = List<bool>.filled(items.length, false);
+
+    for (var i = 0; i < itemStatus.length; i++) {
+      if(db.trackedTasks.containsKey(i))
+      {
+      itemStatus[i] = db.trackedTasks[i]!;
+      }
+    }
   }
 
   Widget build(BuildContext context) {
@@ -59,6 +68,9 @@ class _TodoListState extends State<TodoList> {
       onChanged: (value) {
         setState(() {
           itemStatus[i] = value!;
+
+          db.trackedTasks[i] = value;
+          db.saveTasks();
         });
       },
       title: Text(items[i]),

@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:nook_db/structs.dart';
 import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sqflite/sqflite.dart';
 
 enum CritterType { Bug, Fish, Creature }
@@ -10,6 +13,10 @@ Future<Database>? database;
 Map<int, TrackedCritter> trackedFish = {};
 Map<int, TrackedCritter> trackedBug = {};
 Map<int, TrackedCritter> trackedCreature = {};
+
+SharedPreferences? prefs;
+bool isNorthernHemisphere = true;
+Map<int, bool> trackedTasks = {};
 
 class TrackedCritter {
   int tracked = 0;
@@ -26,6 +33,66 @@ class TrackedCritter {
   Map<String, dynamic> toMap() {
     return {'id': id, 'type': critterType.index, 'isTracked': tracked};
   }
+}
+
+Future<void> getPreferences() async
+{
+  prefs =  await SharedPreferences.getInstance();
+  
+  if(prefs!.containsKey("isNorthernHemisphere"))
+  {
+    isNorthernHemisphere = prefs!.getBool("isNorthernHemisphere")!;
+  }
+
+  DateTime date;
+
+  if(prefs!.containsKey("lastOpenedDate"))
+  {
+    date = DateTime.parse(prefs!.getString("lastOpenedDate")!);
+    DateTime now = DateTime.now();
+    if(date.day != now.day)
+    {
+      prefs!.setString('lastOpenedDate', now.toString());
+      prefs!.setStringList('tasks', []);
+    }
+  }
+  else
+  {
+    prefs!.setString('lastOpenedDate', DateTime.now().toString());
+  }
+
+  if(prefs!.containsKey("tasks"))
+  {
+    List<String> tasks = prefs!.getStringList("tasks")!;
+    for (var task in tasks) {
+      int number = int.parse(task.substring(1));
+      if(task[0] == '1')
+      {
+        trackedTasks[number] = true;
+      }
+      else
+      {
+        trackedTasks[number] = false;
+      }
+    }
+  }
+}
+
+void saveTasks()
+{
+  var temp = trackedTasks.entries.toList();
+  List<String> toSave = [];
+  for (var item in temp) {
+    toSave.add("${item.value? 1 : 0}${item.key}");
+  }
+  prefs!.setStringList("tasks", toSave);
+}
+
+void setHemisphere(bool isNorth)
+{
+  isNorthernHemisphere = isNorth;
+
+  prefs!.setBool("isNorthernHemisphere", isNorthernHemisphere);
 }
 
 Future<void> startDatabase() async {

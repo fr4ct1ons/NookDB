@@ -15,12 +15,13 @@ class CustomSplashscreen extends StatefulWidget {
 
 class _CustomSplashscreenState extends State<CustomSplashscreen> {
 
-  String currentStatus = "Loading tracked critters";
+  String currentStatus = "Loading saved data";
 
   Future<void> loadData() async
   {
     await db.startDatabase();
     await db.getTracked();
+    await db.getPreferences();
 
     _updateStatus("Fetching bugs");
     await loader.getBugs();

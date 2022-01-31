@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'structs.dart' as structs;
+import 'database.dart' as db;
 
 class ConfigPage extends StatefulWidget {
   const ConfigPage({ Key? key }) : super(key: key);
@@ -13,9 +14,9 @@ class _ConfigPageState extends State<ConfigPage> {
   Widget build(BuildContext context) {
     return Scaffold(appBar: AppBar(title: Text("Configurations"),),
     body: ListView(children: [
-      SwitchListTile(value: structs.isNorthernHemisphere, onChanged: (value) {
+      SwitchListTile(value: db.isNorthernHemisphere, onChanged: (value) {
         setState(() {
-          structs.isNorthernHemisphere = value;
+          db.setHemisphere(value);
         });
       }, title: Text("Northern Hemisphere"),)
     ],),);

@@ -46,8 +46,8 @@ class _BugViewState extends State<BugView> {
     for (var i = 0; i < months.length; i++) {
       Color highlight = Colors.orange.shade100;
       
-      if ((bug.monthArrayNorth.contains(i + 1) && isNorthernHemisphere) ||
-          (bug.monthArraySouth.contains(i + 1) && !isNorthernHemisphere)) {
+      if ((bug.monthArrayNorth.contains(i + 1) && db.isNorthernHemisphere) ||
+          (bug.monthArraySouth.contains(i + 1) && !db.isNorthernHemisphere)) {
         highlight = Colors.orangeAccent.shade100;
       }
 
