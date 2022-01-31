@@ -9,12 +9,13 @@ import 'database.dart' as db;
 
 class AvailableCritters extends StatefulWidget {
   const AvailableCritters({Key? key}) : super(key: key);
+  
 
   @override
-  _AvailableCrittersState createState() => _AvailableCrittersState();
+  AvailableCrittersState createState() => AvailableCrittersState();
 }
 
-class _AvailableCrittersState extends State<AvailableCritters> {
+class AvailableCrittersState extends State<AvailableCritters> {
   List<Widget> _buttons = [];
   List<Fish> fish = [];
   List<Bug> bugs = [];
@@ -182,6 +183,14 @@ class _AvailableCrittersState extends State<AvailableCritters> {
         isTracked ? _buttons.insert(0, widget) : _buttons.add(widget);
       }
     }
+  }
+
+  //EXPENSIVE
+  void refreshCritters()
+  {
+    setState(() {
+      getCritters();
+    });
   }
 }
 

@@ -45,7 +45,8 @@ class _FishViewState extends State<FishView> {
 
     for (var i = 0; i < months.length; i++) {
       Color highlight = Colors.blue.shade100;
-      if (fish.monthArrayNorth.contains(i + 1)) {
+      if ((fish.monthArrayNorth.contains(i + 1) && isNorthernHemisphere) ||
+          (fish.monthArraySouth.contains(i + 1) && !isNorthernHemisphere)) {
         highlight = Colors.blueAccent.shade100;
       }
 

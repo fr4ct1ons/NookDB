@@ -45,7 +45,8 @@ class _SeaCreatureViewState extends State<SeaCreatureView> {
 
     for (var i = 0; i < months.length; i++) {
       Color highlight = Colors.deepPurple.shade100;
-      if (creature.monthArrayNorth.contains(i + 1)) {
+      if ((creature.monthArrayNorth.contains(i + 1) && isNorthernHemisphere) ||
+          (creature.monthArraySouth.contains(i + 1) && !isNorthernHemisphere)) {
         highlight = Colors.deepPurpleAccent.shade100;
       }
 

@@ -6,7 +6,9 @@ import 'package:nook_db/ui/search/fossilSearch.dart';
 import 'package:nook_db/ui/search/itemSearch.dart';
 
 class ButtonGrid extends StatefulWidget {
-  const ButtonGrid({Key? key}) : super(key: key);
+  ButtonGrid({Key? key, this.onReturnFromCritterSearch}) : super(key: key);
+
+  final VoidCallback? onReturnFromCritterSearch;
 
   @override
   _ButtonGridState createState() => _ButtonGridState();
@@ -109,7 +111,7 @@ class _ButtonGridState extends State<ButtonGrid> {
       builder: (context) {
         return CritterSearch();
       },
-    ));
+    )).then((value) => widget.onReturnFromCritterSearch!());
   }
 
   void _showItemSearch() async {

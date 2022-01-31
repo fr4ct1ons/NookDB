@@ -1,96 +1,84 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:nook_db/availableCritters.dart';
-import 'package:nook_db/buttonGrid.dart';
-import 'package:nook_db/configPage.dart';
-import 'package:nook_db/structs.dart';
-import 'todoList.dart';
-import 'package:http/http.dart' as http;
+import 'package:nook_db/homePage.dart';
+//import 'package:splashscreen/splashscreen.dart';
 import 'database.dart' as db;
+import 'package:nook_db/structs.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+
+
+class CustomSplashscreen extends StatefulWidget {
+  const CustomSplashscreen({ Key? key }) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  _CustomSplashscreenState createState() => _CustomSplashscreenState();
 }
 
-class _HomePageState extends State<HomePage> {
-  String userName = 'Villager';
-  Widget availableCritters = Text("Loading critters...");
-GlobalKey<AvailableCrittersState> acKey = GlobalKey();
+class _CustomSplashscreenState extends State<CustomSplashscreen> {
 
+  String currentStatus = "Loading tracked critters";
+
+  Future<void> loadData() async
+  {
+    await db.startDatabase();
+    await db.getTracked();
+
+    _updateStatus("Fetching bugs");
+    await _getBugs();
+    _updateStatus("Fetching fishes");
+    await _getFish();
+    _updateStatus("Fetching sea creatures");
+    await _getSeaCreatures();
+    _updateStatus("Fetching items");
+    await _getItems();
+    await _getItemsWall();
+    await _getItemsMisc();
+    _updateStatus("Fetching art pieces");
+    await _getArt();
+    _updateStatus("Fetching fossils");
+    await _getFossils();
+    _updateStatus("Fetching villagers");
+    await _getVillagers();
+    _updateStatus("Done!");
+
+    print("Finished loading data");
+    Navigator.pushReplacement(context, PageRouteBuilder(pageBuilder: (ctx, a1, a2) {
+      return HomePage();
+    }, transitionDuration: Duration(milliseconds: 2000),
+    transitionsBuilder:(context, animation, secondaryAnimation, child) =>
+      FadeTransition(opacity: animation, child: child,)
+    ,));
+  }
+
+  void _updateStatus(String text)
+  {
+    setState(() {
+      currentStatus = text;
+    });
+  }
 
   @override
   void initState() {
     // TODO: implement initState
-    //super.initState();
+    super.initState();
 
-    /*db.startDatabase().then((_) {
-      //TODO: This is horrible, but flutter/dart async methods force my hand.
-      db.getTracked().then((value) {
-        //Getting everything
-        _getBugs() //
-            .then((value) => _getFish() //
-                .then((value) => _getSeaCreatures().then((value) => _getItems()
-                    .then((value) => _getItemsWall().then((value) =>
-                        _getItemsMisc().then((value) => _getArt().then(
-                            (value) => _getFossils()
-                                .then((value) => _getVillagers().then((value) {
-                                      print("done");
-                                      setState(() {
-                                        
-                                        availableCritters = AvailableCritters(key: acKey,);
-                                      });
-                                    })))))))));
-      });
-    });*/
-    availableCritters = AvailableCritters(key: acKey,);
+    loadData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange.shade50,
-      appBar: AppBar(
-        title: const Text("NookDB"),
-        actions: [IconButton(onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder:(context) {
-            return ConfigPage();
-          },)).then((value) {
-            print("Refreshing");
-            setState(() {
-              acKey.currentState?.refreshCritters();
-            });
-          });
-        }, icon: Icon(Icons.menu))],
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(height: 15),
-            TodoList(),
-            ButtonGrid( onReturnFromCritterSearch: () {acKey.currentState!.refreshCritters();},),
-            SizedBox(
-              height: 7,
-            ),
-            Text(
-              "Available critters",
-              style: TextStyle(fontSize: 24),
-            ),
-            SizedBox(
-              height: 7,
-            ),
-            availableCritters
-          ],
-        ),
-      ),
+      backgroundColor: Colors.green,
+      body: Center(child: Column(children: [
+        Text("NookDB", style: TextStyle(fontSize: 48.0, fontWeight: FontWeight.bold, color: Colors.white),),
+        SizedBox(height: 16,),
+      Text(currentStatus, style: TextStyle(color: Colors.white, fontSize: 16.0))],
+      mainAxisAlignment: MainAxisAlignment.center,)),
     );
   }
 
-  Future<void> _getVillagers() async {
+    Future<void> _getVillagers() async {
     const dataUrl = "http://acnhapi.com/v1/villagers/";
     final response = await http.get(Uri.parse(dataUrl));
 

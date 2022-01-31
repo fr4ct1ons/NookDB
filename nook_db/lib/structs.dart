@@ -1,4 +1,8 @@
+import 'package:path/path.dart';
+
 List<Critter> critters = [];
+
+bool isNorthernHemisphere = true;
 
 class Critter {
   int id = 0;
@@ -16,8 +20,12 @@ class Critter {
   String location = '';
 
   bool isActive() {
-    if (monthArrayNorth.contains(DateTime.now().month)) {
-      if (timeArray.contains(DateTime.now().hour)) {
+    if (timeArray.contains(DateTime.now().hour)) {
+      if (monthArrayNorth.contains(DateTime.now().month) && isNorthernHemisphere) {
+        return true;
+      }
+      else if(monthArraySouth.contains(DateTime.now().month) && !isNorthernHemisphere)
+      {
         return true;
       }
     }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nook_db/customSplashscreen.dart';
 import 'package:nook_db/homePage.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const HomePage(),
+      home: const CustomSplashscreen(),
     );
   }
 }
