@@ -73,68 +73,71 @@ class _FishViewState extends State<FishView> {
   Widget build(BuildContext context) {
     String fishName = fish.uppercaseName();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Fish"),
-        backgroundColor: Colors.blue,
-      ),
-      backgroundColor: Colors.blue.shade50,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            children: [
-              Text(
-                fishName,
-                style: TextStyle(fontSize: 24),
-              ),
-              Image(image: NetworkImage(fish.imageUrl)),
-              Text(
-                fish.catchPhrase,
-                style: TextStyle(color: Colors.grey.shade600),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              GridView(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    //crossAxisSpacing: 8,
-                    //mainAxisSpacing: 3,
-                    childAspectRatio: 1 / .18),
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                children: textGrid,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              const Text(
-                "Available during",
-                style: TextStyle(fontSize: 16),
-              ),
-              const SizedBox(
-                height: 12,
-              ),
-              GridView(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 6, childAspectRatio: 1 / 0.85),
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                children: monthsGrid,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text("Track this critter?"),
-                  Checkbox(value: isTracked, onChanged: _startTracking)
-                ],
-              )
-              /*CheckboxListTile(
-                  value: true,
-                  onChanged: (val) {},
-                  title: Text("Track thi critter?")),*/
-            ],
+    return Theme(
+      data: ThemeData(primarySwatch: Colors.blue),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Fish"),
+        ),
+        backgroundColor: Colors.blue.shade50,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              children: [
+                Text(
+                  fishName,
+                  style: TextStyle(fontSize: 24),
+                ),
+                Image(image: NetworkImage(fish.imageUrl)),
+                Text(
+                  fish.catchPhrase,
+                  style: TextStyle(color: Colors.grey.shade600),
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                GridView(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      //crossAxisSpacing: 8,
+                      //mainAxisSpacing: 3,
+                      childAspectRatio: 1 / .18),
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  children: textGrid,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                const Text(
+                  "Available during",
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                GridView(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 6, childAspectRatio: 1 / 0.85),
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  children: monthsGrid,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Track this critter?"),
+                    Checkbox(value: isTracked, onChanged: _startTracking)
+                  ],
+                ),
+                  Padding(padding: EdgeInsets.all(8), child: Text(fish.museumPhrase, style: TextStyle(fontSize: 18.0), textAlign: TextAlign.justify,),)
+                /*CheckboxListTile(
+                    value: true,
+                    onChanged: (val) {},
+                    title: Text("Track thi critter?")),*/
+              ],
+            ),
           ),
         ),
       ),

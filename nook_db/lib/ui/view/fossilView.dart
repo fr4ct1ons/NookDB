@@ -67,6 +67,7 @@ class _FossilViewState extends State<FossilView> {
               const SizedBox(
                 height: 15,
               ),
+                Padding(padding: EdgeInsets.all(8), child: Text(fossil.museumPhrase, style: TextStyle(fontSize: 18.0), textAlign: TextAlign.justify,),)
             ],
           ),
         ),

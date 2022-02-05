@@ -31,43 +31,46 @@ class _ArtViewState extends State<ArtView> {
   Widget build(BuildContext context) {
     String bugName = art.uppercaseName();
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Art piece"),
-        backgroundColor: Colors.cyan,
-      ),
-      backgroundColor: Colors.cyan.shade50,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(10),
-          child: Column(
-            children: [
-              Text(
-                bugName,
-                style: TextStyle(fontSize: 24),
-              ),
-              Image(
-                image: NetworkImage(art.imageUrl),
-                height: 256,
-                fit: BoxFit.fitHeight,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              GridView(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    //crossAxisSpacing: 8,
-                    //mainAxisSpacing: 3,
-                    childAspectRatio: 1 / .18),
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                children: textGrid,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-            ],
+    return Theme(
+      data: ThemeData(primarySwatch: Colors.cyan),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Art piece"),
+        ),
+        backgroundColor: Colors.cyan.shade50,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              children: [
+                Text(
+                  bugName,
+                  style: TextStyle(fontSize: 24),
+                ),
+                Image(
+                  image: NetworkImage(art.imageUrl),
+                  height: 256,
+                  fit: BoxFit.fitHeight,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                GridView(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      //crossAxisSpacing: 8,
+                      //mainAxisSpacing: 3,
+                      childAspectRatio: 1 / .18),
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  children: textGrid,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                  Padding(padding: EdgeInsets.all(8), child: Text(art.museumDesc, style: TextStyle(fontSize: 18.0), textAlign: TextAlign.justify,),)
+              ],
+            ),
           ),
         ),
       ),
