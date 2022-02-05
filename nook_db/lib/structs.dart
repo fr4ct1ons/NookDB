@@ -123,3 +123,19 @@ class Villager {
     return usName[0].toUpperCase() + usName.substring(1);
   }
 }
+
+List<Music> musics = [];
+
+class Music
+{
+  String usName = '';
+  String musicUrl = '';
+  String imageUrl = '';
+  bool isOrderable = false;
+  int buyPrice = 0;
+  int sellPrice = 0;
+
+  String uppercaseName() {
+    return usName[0].toUpperCase() + usName.substring(1);
+  }
+}

@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:nook_db/ui/view/artView.dart';
-import 'package:nook_db/availableCritters.dart';
-import 'package:nook_db/ui/view/bugView.dart';
-import 'package:nook_db/buttonGrid.dart';
-import 'package:nook_db/ui/view/fishView.dart';
-import 'package:nook_db/ui/view/itemView.dart';
-import 'package:nook_db/ui/view/seaCreatureView.dart';
 import 'package:nook_db/structs.dart';
-import '../../todoList.dart';
+import 'package:nook_db/ui/view/musicView.dart';
 
-class ArtSearch extends StatefulWidget {
-  const ArtSearch({Key? key}) : super(key: key);
+class MusicSearch extends StatefulWidget {
+  const MusicSearch({Key? key}) : super(key: key);
 
   @override
-  State<ArtSearch> createState() => _ArtSearchState();
+  State<MusicSearch> createState() => _MusicSearchState();
 }
 
-class _ArtSearchState extends State<ArtSearch> {
+class _MusicSearchState extends State<MusicSearch> {
   String searchQuery = '';
 
   @override
@@ -24,7 +18,7 @@ class _ArtSearchState extends State<ArtSearch> {
     return Scaffold(
       backgroundColor: Colors.orange.shade50,
       appBar: AppBar(
-        title: const Text("Search art pieces"),
+        title: const Text("Search music"),
       ),
       body: Padding(
         padding: EdgeInsets.all(8),
@@ -32,7 +26,7 @@ class _ArtSearchState extends State<ArtSearch> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             TextField(
-              decoration: InputDecoration(labelText: "Art piece name"),
+              decoration: InputDecoration(labelText: "Music name"),
               onChanged: (value) {
                 setState(() {
                   searchQuery = value;
@@ -42,7 +36,7 @@ class _ArtSearchState extends State<ArtSearch> {
             Expanded(
               child: ListView.builder(
                 itemBuilder: _listBuilder,
-                itemCount: artPieces.length,
+                itemCount: musics.length,
               ),
             )
           ],
@@ -55,9 +49,9 @@ class _ArtSearchState extends State<ArtSearch> {
     Color bg = Colors.white;
 
     if (searchQuery.isNotEmpty) {
-      if (searchQuery.length <= artPieces[i].usName.length) {
+      if (searchQuery.length <= musics[i].usName.length) {
         if (searchQuery.toLowerCase() !=
-            artPieces[i]
+            musics[i]
                 .usName
                 .toLowerCase()
                 .substring(0, searchQuery.length)) {
@@ -69,7 +63,7 @@ class _ArtSearchState extends State<ArtSearch> {
     }
     return GestureDetector(
       onTap: () {
-        _showArt(artPieces[i]);
+        _showMusic(musics[i]);
       },
       child: Card(
         color: bg,
@@ -77,7 +71,7 @@ class _ArtSearchState extends State<ArtSearch> {
           children: [
             Image(
               height: 110,
-              image: NetworkImage(artPieces[i].imageUrl),
+              image: NetworkImage(musics[i].imageUrl),
             ),
             SizedBox(
               width: 8,
@@ -86,17 +80,17 @@ class _ArtSearchState extends State<ArtSearch> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  artPieces[i].uppercaseName(),
+                  musics[i].uppercaseName(),
                   style: TextStyle(fontSize: 20),
                 ),
                 Text(
-                  "Purchase for: ${artPieces[i].buyPrice == -1 ? 'Non-purchasable' : artPieces[i].buyPrice}",
+                  "Purchase for: ${musics[i].buyPrice == -1 ? 'Non-purchasable' : musics[i].buyPrice}",
                   style: TextStyle(fontSize: 16),
                 ),
                 Row(
                   children: [
                     Text(
-                      "Sell for: ${artPieces[i].sellPrice == -1 ? 'Non-sellable' : artPieces[i].sellPrice}",
+                      "Sell for: ${musics[i].sellPrice == -1 ? 'Non-sellable' : musics[i].sellPrice}",
                       style: TextStyle(fontSize: 16),
                     ),
                   ],
@@ -109,11 +103,11 @@ class _ArtSearchState extends State<ArtSearch> {
     );
   }
 
-  void _showArt(Art art) async {
+  void _showMusic(Music music) async {
     await Navigator.push(context, MaterialPageRoute(
       builder: (context) {
-        return ArtView(
-          art: art,
+        return MusicView(
+          music: music,
         );
       },
     ));

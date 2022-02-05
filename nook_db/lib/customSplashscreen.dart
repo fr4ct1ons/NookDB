@@ -39,6 +39,8 @@ class _CustomSplashscreenState extends State<CustomSplashscreen> {
     await loader.getFossils();
     _updateStatus("Fetching villagers");
     await loader.getVillagers();
+    _updateStatus("Fetching K.K's songs");
+    await loader.getMusic();
     _updateStatus("Done!");
 
     print("Finished loading data");

@@ -2,6 +2,32 @@ import 'package:nook_db/structs.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+Future<void> getMusic() async
+{
+    const dataUrl = "http://acnhapi.com/v1/songs/";
+    final response = await http.get(Uri.parse(dataUrl));
+
+    var temp = (json.decode(response.body)) as Map;
+    var tempI = temp.entries.map((e) => e.value).toList();
+
+    print("Item: ${tempI[0]}");
+
+    for (var i = 0; i < tempI.length; i++) {
+      Music newMusic = Music();
+
+      newMusic.usName = tempI[i]['name']['name-USen'];
+      newMusic.imageUrl = tempI[i]['image_uri'];
+      newMusic.buyPrice = tempI[i]['buy-price'] ?? -1;
+      newMusic.sellPrice = tempI[i]['sell-price'];
+      newMusic.isOrderable = tempI[i]['isOrderable'];
+      newMusic.musicUrl = tempI[i]['music_uri'];
+
+      newMusic.imageUrl = newMusic.imageUrl.replaceFirst(RegExp(r's'), '');
+
+      musics.add(newMusic);
+    }
+}
+
 Future<void> getVillagers() async {
     const dataUrl = "http://acnhapi.com/v1/villagers/";
     final response = await http.get(Uri.parse(dataUrl));

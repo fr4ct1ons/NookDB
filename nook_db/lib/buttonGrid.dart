@@ -5,6 +5,8 @@ import 'package:nook_db/ui/search/critterSearch.dart';
 import 'package:nook_db/ui/search/fossilSearch.dart';
 import 'package:nook_db/ui/search/itemSearch.dart';
 
+import 'ui/search/musicSearch.dart';
+
 class ButtonGrid extends StatefulWidget {
   ButtonGrid({Key? key, this.onReturnFromCritterSearch}) : super(key: key);
 
@@ -89,14 +91,14 @@ class _ButtonGridState extends State<ButtonGrid> {
                   ),
                 )),
             OutlinedButton(
-                onPressed: () {},
+                onPressed: _showMusicSearch,
                 child: Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: Column(
                     children: const [
                       Image(
-                          height: 64, image: AssetImage("assets/clothing.png")),
-                      Text('Clothing'),
+                          height: 64, image: AssetImage("assets/music.png")),
+                      Text('Music'),
                     ],
                   ),
                 )),
@@ -104,6 +106,13 @@ class _ButtonGridState extends State<ButtonGrid> {
         ),
       ),
     ));
+  }
+
+  void _showMusicSearch() async
+  {
+    await Navigator.push(context, MaterialPageRoute(builder:(context) {
+      return MusicSearch();
+    },));
   }
 
   void _showCritterSearch() async {
