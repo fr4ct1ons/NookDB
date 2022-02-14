@@ -10,8 +10,6 @@ Future<void> getMusic() async
     var temp = (json.decode(response.body)) as Map;
     var tempI = temp.entries.map((e) => e.value).toList();
 
-    print("Item: ${tempI[0]}");
-
     for (var i = 0; i < tempI.length; i++) {
       Music newMusic = Music();
 
@@ -80,7 +78,7 @@ Future<void> getVillagers() async {
       newFossil.price = tempI[i]['price'];
       newFossil.museumPhrase = tempI[i]['museum-phrase'];
 
-      newFossil.imageUrl.replaceFirst(RegExp(r's'), '');
+      newFossil.imageUrl = newFossil.imageUrl.replaceFirst(RegExp(r's'), '');
 
       fossils.add(newFossil);
     }
@@ -207,6 +205,8 @@ Future<void> getVillagers() async {
       newItem.source = tempI[i][0]['source'];
       newItem.sourceDetail = tempI[i][0]['source-detail'];
 
+      newItem.imageUrl = newItem.imageUrl.replaceFirst(RegExp(r's'), '');
+
       items.add(newItem);
     }
   }
@@ -252,7 +252,7 @@ Future<void> getVillagers() async {
         newCritter.museumPhrase = _crts[i]['museum-phrase'];
 
         newCritter.imageUrl = newCritter.imageUrl.replaceFirst(RegExp(r's'), '');
-        newCritter.imageUrl = newCritter.iconUrl.replaceFirst(RegExp(r's'), '');
+        newCritter.iconUrl = newCritter.iconUrl.replaceFirst(RegExp(r's'), '');
 
         //newCritter.location = fish[i]['availability']["location"]; //Sea Creatures don't use location
         newCritter.speed = _crts[i]['speed'];
@@ -340,7 +340,7 @@ Future<void> getVillagers() async {
         newCritter.museumPhrase = _bugs[i]['museum-phrase'];
 
         newCritter.imageUrl = newCritter.imageUrl.replaceFirst(RegExp(r's'), '');
-        newCritter.imageUrl = newCritter.iconUrl.replaceFirst(RegExp(r's'), '');
+        newCritter.iconUrl = newCritter.iconUrl.replaceFirst(RegExp(r's'), '');
 
         newCritter.priceFlick = _bugs[i]['price-flick'];
         newCritter.location = _bugs[i]['availability']["location"];

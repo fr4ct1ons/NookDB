@@ -1,8 +1,20 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:nook_db/customSplashscreen.dart';
 import 'package:nook_db/homePage.dart';
 
+class MyHttpOverrides extends HttpOverrides
+{
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    // TODO: implement createHttpClient
+    return super.createHttpClient(context)..maxConnectionsPerHost = 5;
+  }
+}
+
 void main() {
+  HttpOverrides.global = MyHttpOverrides();
   runApp(const MyApp());
 }
 

@@ -121,46 +121,46 @@ class _CritterSearchState extends State<CritterSearch> {
       }
     }
     return GestureDetector(
-      onTap: () {
-        _showCritter(critters[i]);
-      },
-      child: Card(
-        color: bg,
-        child: Row(
-          children: [
-            Image(
-              height: 110,
-              image: NetworkImage(critters[i].iconUrl),
-            ),
-            SizedBox(
-              width: 8,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  critters[i].uppercaseName(),
-                  style: TextStyle(fontSize: 20),
-                ),
-                Text(
-                  "Price: ${critters[i].price}",
-                  style: TextStyle(fontSize: 15),
-                ),
-                Row(
-                  children: [
-                    Text(
-                      critters[i].isActive()
-                          ? "Currently active"
-                          : "Currently inactive",
-                      style: TextStyle(fontSize: 17),
-                    ),
-                  ],
-                )
-              ],
-            ),
-          ],
+        onTap: () {
+          _showCritter(critters[i]);
+        },
+        child: Card(
+          color: bg,
+          child: Row(
+            children: [
+              Image(
+                height: 90,
+                image: NetworkImage(critters[i].iconUrl),
+              ),
+              SizedBox(
+                width: 8,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    critters[i].uppercaseName(),
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  Text(
+                    "Price: ${critters[i].price}",
+                    style: TextStyle(fontSize: 14),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        critters[i].isActive()
+                            ? "Currently active!"
+                            : "Currently inactive",
+                        style: TextStyle(fontSize: 17),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
-      ),
     );
   }
 

@@ -104,7 +104,7 @@ class _ItemSearchState extends State<ItemSearch> {
         child: Row(
           children: [
             Image(
-              height: 110,
+              height: 100,
               image: NetworkImage(items[i].imageUrl),
             ),
             SizedBox(
@@ -119,13 +119,13 @@ class _ItemSearchState extends State<ItemSearch> {
                 ),
                 Text(
                   "Purchase for: ${items[i].buyPrice == -1 ? 'Non-purchasable' : items[i].buyPrice}",
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 14),
                 ),
                 Row(
                   children: [
                     Text(
                       "Sell for: ${items[i].sellPrice == -1 ? 'Non-sellable' : items[i].sellPrice}",
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 14),
                     ),
                   ],
                 )

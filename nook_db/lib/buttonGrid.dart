@@ -17,6 +17,9 @@ class ButtonGrid extends StatefulWidget {
 }
 
 class _ButtonGridState extends State<ButtonGrid> {
+  final imageSize = 48.0;
+  final textStyle = TextStyle(fontSize: 11);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -38,10 +41,10 @@ class _ButtonGridState extends State<ButtonGrid> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: Column(
-                    children: const [
+                    children: [
                       Image(
-                          height: 64, image: AssetImage("assets/critters.png")),
-                      Text('Critters'),
+                          height: imageSize, image: AssetImage("assets/critters.png")),
+                      Text('Critters', style: textStyle,),
                     ],
                   ),
                 )),
@@ -50,9 +53,9 @@ class _ButtonGridState extends State<ButtonGrid> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: Column(
-                    children: const [
-                      Image(height: 64, image: AssetImage("assets/art.png")),
-                      Text('Art'),
+                    children: [
+                      Image(height: imageSize, image: AssetImage("assets/art.png")),
+                      Text('Art', style: textStyle,),
                     ],
                   ),
                 )),
@@ -61,9 +64,9 @@ class _ButtonGridState extends State<ButtonGrid> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: Column(
-                    children: const [
-                      Image(height: 64, image: AssetImage("assets/items.png")),
-                      Text('Items'),
+                    children:  [
+                      Image(height: imageSize, image: AssetImage("assets/items.png")),
+                      Text('Items', style: textStyle,),
                     ],
                   ),
                 )),
@@ -72,10 +75,10 @@ class _ButtonGridState extends State<ButtonGrid> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: Column(
-                    children: const [
+                    children:  [
                       Image(
-                          height: 64, image: AssetImage("assets/villager.png")),
-                      Text('Villagers'),
+                          height: imageSize, image: AssetImage("assets/villager.png")),
+                      Text('Villagers', style: textStyle,),
                     ],
                   ),
                 )),
@@ -84,9 +87,9 @@ class _ButtonGridState extends State<ButtonGrid> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: Column(
-                    children: const [
-                      Image(height: 64, image: AssetImage("assets/fossil.png")),
-                      Text('Fossils'),
+                    children:  [
+                      Image(height: imageSize, image: AssetImage("assets/fossil.png")),
+                      Text('Fossils', style: textStyle,),
                     ],
                   ),
                 )),
@@ -95,10 +98,10 @@ class _ButtonGridState extends State<ButtonGrid> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 12),
                   child: Column(
-                    children: const [
+                    children:  [
                       Image(
-                          height: 64, image: AssetImage("assets/music.png")),
-                      Text('Music'),
+                          height: imageSize, image: AssetImage("assets/music.png")),
+                      Text('Music', style: textStyle,),
                     ],
                   ),
                 )),

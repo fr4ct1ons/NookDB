@@ -12,7 +12,7 @@ class ConfigPage extends StatefulWidget {
 class _ConfigPageState extends State<ConfigPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(title: Text("Configurations"),),
+    return Scaffold(appBar: AppBar(title: Text("Settings"),),
     body: ListView(children: [
       SwitchListTile(value: db.isNorthernHemisphere, onChanged: (value) {
         setState(() {

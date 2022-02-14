@@ -85,13 +85,13 @@ class _MusicSearchState extends State<MusicSearch> {
                 ),
                 Text(
                   "Purchase for: ${musics[i].buyPrice == -1 ? 'Non-purchasable' : musics[i].buyPrice}",
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 14),
                 ),
                 Row(
                   children: [
                     Text(
                       "Sell for: ${musics[i].sellPrice == -1 ? 'Non-sellable' : musics[i].sellPrice}",
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 14),
                     ),
                   ],
                 )
